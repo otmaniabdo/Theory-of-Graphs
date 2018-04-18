@@ -1,0 +1,282 @@
+package com.jihane.gui;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JTextField;
+
+import com.jihane.algorithms.AlgorithmeDijkstra;
+import com.jihane.algorithms.KruskalAlgorithm;
+import com.jihane.models.Arc;
+import com.jihane.models.Graphe;
+import com.jihane.models.Noeud;
+
+import javax.swing.JLabel;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.awt.event.ActionEvent;
+import javax.swing.JPanel;
+import java.awt.Color;
+import javax.swing.JTextArea;
+import java.awt.FlowLayout;
+import javax.swing.border.TitledBorder;
+import javax.swing.UIManager;
+import java.awt.Font;
+import javax.swing.SwingConstants;
+import javax.swing.JSeparator;
+import java.awt.Window.Type;
+import javax.swing.JComboBox;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.Choice;
+
+public class Main extends JFrame{
+
+	JFrame frame;
+	private JTextField nombreNoeudsField;
+	private JTextField nombreArcsField;
+	public JPanel panel_4 = new JPanel();
+	public JButton btnDjikstra = new JButton("Djikstra");
+	public JButton buttonKruskal = new JButton("Kruskal");
+
+	JComboBox cbDjikstraDebut;
+	JComboBox cbDjikstraFin;
+	static LinkedList<Noeud> noeuds = new LinkedList<Noeud>();
+	static LinkedList<Arc> arcs = new LinkedList<Arc>();
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Main window = new Main();
+//					window.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public Main() {
+		initialize();
+	}
+
+	public Main(LinkedList<Noeud> noeuds, int nombreNoeuds) {
+		this.setNoeuds(noeuds);
+		initialize();
+		nombreNoeudsField.setText(Integer.toString(nombreNoeuds));
+	}
+
+	public Main(LinkedList<Arc> arcs, int nombreNoeuds, int nombreArcs) {
+		this.setArcs(arcs);
+		initialize();
+		
+		nombreNoeudsField.setText(Integer.toString(nombreNoeuds));
+		nombreArcsField.setText(Integer.toString(nombreArcs));
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setBackground(new Color(255, 255, 255));
+		frame.setBounds(100, 0, 1093, 750);
+		frame.getContentPane().setLayout(null);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(54, 33, 89));
+		panel.setBounds(0, 0, 437, 711);
+		frame.getContentPane().add(panel);
+		panel.setLayout(null);
+
+		JPanel panel_2 = new JPanel();
+		panel_2.setBounds(444, 0, 643, 131);
+		panel_2.setBackground(new Color(110, 89, 222));
+		frame.getContentPane().add(panel_2);
+		panel_2.setLayout(null);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(new Color(85, 55, 118));
+		panel_1.setBounds(10, 193, 420, 50);
+		panel.add(panel_1);
+
+		panel_4.setBounds(494, 189, 511, 511);
+		frame.getContentPane().add(panel_4);
+
+		nombreNoeudsField = new JTextField();
+		nombreNoeudsField.setBounds(311, 23, 116, 22);
+		panel_2.add(nombreNoeudsField);
+		nombreNoeudsField.setColumns(10);
+		
+		JLabel lblNewLabel = new JLabel("Saisissez le nombre de Noeuds :");
+		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		lblNewLabel.setForeground(new Color(255, 255, 255));
+		lblNewLabel.setBounds(12, 25, 236, 16);
+		panel_2.add(lblNewLabel);
+		
+		JButton btnValiderNoeuds = new JButton("Valider");
+		btnValiderNoeuds.setBounds(508, 23, 97, 25);
+		panel_2.add(btnValiderNoeuds);
+		
+		JLabel lblSaisissezLeNombre = new JLabel("Saisissez le nombre d'arcs :");
+		lblSaisissezLeNombre.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		lblSaisissezLeNombre.setForeground(new Color(255, 255, 255));
+		lblSaisissezLeNombre.setBounds(12, 61, 200, 16);
+		panel_2.add(lblSaisissezLeNombre);
+		
+		nombreArcsField = new JTextField();
+		nombreArcsField.setBounds(311, 59, 116, 22);
+		panel_2.add(nombreArcsField);
+		nombreArcsField.setColumns(10);
+		
+		cbDjikstraDebut = new JComboBox();
+		cbDjikstraDebut.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				getArray(Integer.parseInt(nombreNoeudsField.getText()));
+			}
+		});
+		cbDjikstraDebut.setBounds(12, 14, 122, 22);
+		panel_1.add(cbDjikstraDebut);
+		
+		cbDjikstraFin = new JComboBox();
+		cbDjikstraFin.setBounds(146, 14, 122, 22);
+		panel_1.add(cbDjikstraFin);
+
+		JButton btnValiderArcs = new JButton("Valider");
+		btnValiderArcs.setEnabled(false);
+		btnValiderArcs.setBounds(508, 59, 97, 25);
+		panel_2.add(btnValiderArcs);
+		
+		Choice choice = new Choice();
+		choice.setBounds(311, 87, 116, 20);
+		choice.add("FRLayout");
+		choice.add("CircleLayout");
+		choice.add("SpringLayout");
+		choice.add("SpringLayout2");
+		panel_2.add(choice);
+		btnValiderArcs.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int nombreArcs = Integer.parseInt(nombreArcsField.getText());
+				
+				new ManageArcs(noeuds, nombreArcs,choice.getSelectedItem()).setVisible(true);
+				frame.setVisible(false);
+			}
+		});
+		btnValiderNoeuds.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+
+				if(nombreNoeudsField.getText().equals("")) {
+				}else {
+					if(Integer.parseInt(nombreNoeudsField.getText()) == 0) {						
+					}else {
+						int nombreNoeuds = Integer.parseInt(nombreNoeudsField.getText());
+						 	noeuds.clear();
+						for(int i=1; i<=nombreNoeuds; i++) {
+							noeuds.add(new Noeud(i, Integer.toString(i)));
+						}
+						btnValiderArcs.setEnabled(true);
+					}
+
+				}
+					
+			}
+		});
+
+		JTextArea logField = new JTextArea();
+		logField.setBackground(new Color(255, 255, 204));
+		logField.setForeground(new Color(0, 0, 0));
+		logField.setBounds(454, 142, 631, 47);
+		frame.getContentPane().add(logField);
+		panel_1.setLayout(null);
+		
+		btnDjikstra.setEnabled(false);
+		btnDjikstra.setBounds(280, 13, 128, 25);
+		panel_1.add(btnDjikstra);
+		
+		JLabel lblGraphtheoryAlgorithm = new JLabel("Graph\u2010Theory Algorithms");
+		lblGraphtheoryAlgorithm.setBounds(34, 11, 299, 33);
+		panel.add(lblGraphtheoryAlgorithm);
+		lblGraphtheoryAlgorithm.setBackground(Color.WHITE);
+		lblGraphtheoryAlgorithm.setForeground(Color.LIGHT_GRAY);
+		lblGraphtheoryAlgorithm.setFont(new Font("Segoe UI", Font.BOLD, 24));
+		
+		JSeparator separator = new JSeparator();
+		separator.setForeground(Color.GRAY);
+		separator.setBounds(27, 57, 358, 9);
+		panel.add(separator);
+		
+		JPanel panel_3 = new JPanel();
+		panel_3.setLayout(null);
+		panel_3.setBackground(new Color(85, 55, 118));
+		panel_3.setBounds(10, 253, 420, 50);
+		panel.add(panel_3);
+		
+		buttonKruskal.setEnabled(false);
+		buttonKruskal.setBounds(280, 13, 128, 25);
+		buttonKruskal.setBounds(138, 11, 128, 25);
+		buttonKruskal.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Graphe graphe = new Graphe(arcs, noeuds);
+				KruskalAlgorithm ks = new KruskalAlgorithm(graphe);
+				logField.setText(" **** Kruskal : ");
+				for (Arc arc : ks.execute()) {
+					logField.setText(logField.getText() + arc.toPath());
+				}
+
+			}
+		});
+		panel_3.add(buttonKruskal);
+		
+		btnDjikstra.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				Graphe graphe = new Graphe(arcs, noeuds);
+				AlgorithmeDijkstra ad = new AlgorithmeDijkstra(graphe);
+				Noeud source = noeuds.get(Integer.parseInt(cbDjikstraDebut.getSelectedItem().toString())-1);
+				Noeud destination = noeuds.get(Integer.parseInt(cbDjikstraFin.getSelectedItem().toString())-1);
+				logField.setText(ad.plusCourtChemin(source, destination));
+			}
+		});
+	}
+	
+	public void getArray(int nbr) {
+		ArrayList<Integer> arl = new ArrayList<Integer>();
+		for(int i=1; i<=nbr; i++)	arl.add(i);
+		this.cbDjikstraDebut.setModel(new DefaultComboBoxModel(arl.toArray()));
+		this.cbDjikstraFin.setModel(new DefaultComboBoxModel(arl.toArray()));
+//		for (int i=0; i<arl.size(); i++) {
+//			this.cbDjikstraDebut.addItem(arl.get(i).toString());
+//			this.cbDjikstraFin.addItem(arl.get(i).toString());
+//		}
+	}
+
+	public LinkedList<Noeud> getNoeuds() {
+		return noeuds;
+	}
+
+	public void setNoeuds(LinkedList<Noeud> noeuds) {
+		this.noeuds = noeuds;
+	}
+
+	public LinkedList<Arc> getArcs() {
+		return arcs;
+	}
+
+	public void setArcs(LinkedList<Arc> arcs) {
+		this.arcs = arcs;
+	}
+}
