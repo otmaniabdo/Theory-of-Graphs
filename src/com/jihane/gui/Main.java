@@ -55,6 +55,7 @@ public class Main extends JFrame{
 	public JPanel panel_4 = new JPanel();
 	public JButton btnDjikstra = new JButton("Djikstra");
 	public JButton buttonKruskal = new JButton("Kruskal");
+	public JButton btnColoriage = new JButton("Colorier le graphe");
 
 	JComboBox cbDjikstraDebut;
 	JComboBox cbDjikstraFin;
@@ -260,8 +261,17 @@ public class Main extends JFrame{
 			}
 		});
 		panel_3.add(buttonKruskal);
-		JButton btnColor = new JButton("color");
-		btnColor.addActionListener(new ActionListener() {
+		
+		JPanel panel_5 = new JPanel();
+		panel_5.setLayout(null);
+		panel_5.setBackground(new Color(85, 55, 118));
+		panel_5.setBounds(10, 313, 420, 50);
+		panel.add(panel_5);
+
+		btnColoriage.setEnabled(false);
+		btnColoriage.setBounds(128, 13, 145, 25);
+		panel_5.add(btnColoriage);
+		btnColoriage.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -327,8 +337,6 @@ public class Main extends JFrame{
 				}
 			}
 		});
-		btnColor.setBounds(0, 11, 97, 25);
-		panel_3.add(btnColor);
 		
 		btnDjikstra.addActionListener(new ActionListener() {
 			@Override

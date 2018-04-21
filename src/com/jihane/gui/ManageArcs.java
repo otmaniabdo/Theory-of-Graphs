@@ -107,6 +107,7 @@ public class ManageArcs extends JFrame {
 					setVisible(false);
 					window.btnDjikstra.setEnabled(true);
 					window.buttonKruskal.setEnabled(true);
+					window.btnColoriage.setEnabled(true);
 					window.frame.setVisible(true);
 				} catch (Exception e1) {
 					e1.printStackTrace();
