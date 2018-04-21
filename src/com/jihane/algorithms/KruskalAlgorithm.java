@@ -62,8 +62,9 @@ public class KruskalAlgorithm {
         return spanningTree;
     }
     
-    public BasicVisualizationServer<Integer, String> DrawGraph(LinkedList<Noeud> noeuds,LinkedList<Arc> arcs,String GrapheLayout) {
-    	DrawingGraph grph = new DrawingGraph(arcs,noeuds.size());
+    public BasicVisualizationServer<Integer, String> DrawGraph(LinkedList<Noeud> noeuds,LinkedList<Arc> arcs,String GrapheLayout,boolean orientation) {
+    	
+    	DrawingGraph grph = new DrawingGraph(arcs,noeuds.size(),orientation);
 		Layout<Integer, String> layout;
 		if(GrapheLayout.equals("FRLayout")) {
 			layout = new FRLayout<>(grph.getGraph());

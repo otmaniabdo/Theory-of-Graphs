@@ -45,6 +45,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.BasicStroke;
 import java.awt.Choice;
+import javax.swing.JCheckBox;
 
 public class Main extends JFrame{
 
@@ -54,6 +55,7 @@ public class Main extends JFrame{
 	public JPanel panel_4 = new JPanel();
 	public JButton btnDjikstra = new JButton("Djikstra");
 	public JButton buttonKruskal = new JButton("Kruskal");
+	public JCheckBox chckbxOrient = new JCheckBox("Orient\u00E9");
 
 	JComboBox cbDjikstraDebut;
 	JComboBox cbDjikstraFin;
@@ -182,12 +184,15 @@ public class Main extends JFrame{
 		choice.add("SpringLayout");
 		choice.add("SpringLayout2");
 		panel_2.add(choice);
+		
+		chckbxOrient.setBounds(508, 91, 97, 23);
+		panel_2.add(chckbxOrient);
 		btnValiderArcs.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int nombreArcs = Integer.parseInt(nombreArcsField.getText());
 				
-				new ManageArcs(noeuds, nombreArcs,choice.getSelectedItem()).setVisible(true);
+				new ManageArcs(noeuds, nombreArcs,choice.getSelectedItem(),chckbxOrient.isSelected()).setVisible(true);
 				frame.setVisible(false);
 			}
 		});
@@ -257,7 +262,7 @@ public class Main extends JFrame{
 				}
 				
 				panel_4.removeAll();
-				panel_4.add(ks.DrawGraph(noeuds,listKruskal,choice.getSelectedItem()));
+				panel_4.add(ks.DrawGraph(noeuds,listKruskal,choice.getSelectedItem(), chckbxOrient.isSelected()));
 			}
 		});
 		panel_3.add(buttonKruskal);
@@ -267,7 +272,7 @@ public class Main extends JFrame{
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 			        panel_4.removeAll();
-					DrawingGraph grph = new DrawingGraph(graphe.getArcs(), graphe.getNoeuds().size());
+					DrawingGraph grph = new DrawingGraph(graphe.getArcs(), graphe.getNoeuds().size(),chckbxOrient.isSelected());
 					Layout<Integer, String> layout;
 					if(choice.getSelectedItem().equals("FRLayout")) {
 						layout = new FRLayout<>(grph.g);
@@ -340,7 +345,7 @@ public class Main extends JFrame{
 				LinkedList<Noeud> chemin = ad.dessinerChemin(source, destination);
 				logField.setText(ad.plusCourtChemin(source, destination));
 				panel_4.removeAll();
-				panel_4.add(ad.DrawGraph(graphe, chemin,choice.getSelectedItem()));
+				panel_4.add(ad.DrawGraph(graphe, chemin,choice.getSelectedItem(),chckbxOrient.isSelected()));
 
 			}
 		});

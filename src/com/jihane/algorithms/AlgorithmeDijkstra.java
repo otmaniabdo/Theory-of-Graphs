@@ -140,8 +140,8 @@ public class AlgorithmeDijkstra {
     	return this.dessinerChemin(source, destination).toString();
     }
     
-    public BasicVisualizationServer<Integer, String> DrawGraph(Graphe graphe, LinkedList<Noeud> chemin,String GrapheLayout) {
-		DrawingGraph grph = new DrawingGraph(graphe.getArcs(),graphe.getNoeuds().size());
+    public BasicVisualizationServer<Integer, String> DrawGraph(Graphe graphe, LinkedList<Noeud> chemin,String GrapheLayout,boolean orientation) {
+		DrawingGraph grph = new DrawingGraph(graphe.getArcs(),graphe.getNoeuds().size(),orientation);
 		Layout<Integer, String> layout;
 		if(GrapheLayout.equals("FRLayout")) {
 			layout = new FRLayout<>(grph.getGraph());
@@ -162,11 +162,11 @@ public class AlgorithmeDijkstra {
 			public Paint transform(Integer i) {
             	if(FindNoeuds(chemin, i)) {
                     System.out.println("Red");
-                    return Color.RED;
+                    return Color.GREEN;
             	}
             	else {
                 	System.out.println("Green");
-            		return Color.GREEN;
+            		return Color.RED;
             	}
             }
         };  
