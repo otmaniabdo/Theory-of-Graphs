@@ -33,6 +33,7 @@ import java.util.LinkedList;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 
 import javax.swing.JTextArea;
@@ -147,6 +148,7 @@ public class Main extends JFrame{
 		
 		JButton btnValiderNoeuds = new JButton("Valider");
 		btnValiderNoeuds.setBounds(508, 23, 97, 25);
+		btnValiderNoeuds.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		panel_2.add(btnValiderNoeuds);
 		
 		JLabel lblSaisissezLeNombre = new JLabel("Saisissez le nombre d'arcs :");
@@ -175,6 +177,7 @@ public class Main extends JFrame{
 		panel_1.add(cbDjikstraFin);
 
 		JButton btnValiderArcs = new JButton("Valider");
+		btnValiderArcs.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		btnValiderArcs.setEnabled(false);
 		btnValiderArcs.setBounds(508, 59, 97, 25);
 		panel_2.add(btnValiderArcs);
@@ -226,6 +229,7 @@ public class Main extends JFrame{
 		
 		btnDjikstra.setEnabled(false);
 		btnDjikstra.setBounds(280, 13, 128, 25);
+		btnDjikstra.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		panel_1.add(btnDjikstra);
 		
 		JLabel lblGraphtheoryAlgorithm = new JLabel("Graph\u2010Theory Algorithms");
@@ -247,8 +251,8 @@ public class Main extends JFrame{
 		panel.add(panel_3);
 		
 		buttonKruskal.setEnabled(false);
-		buttonKruskal.setBounds(280, 13, 128, 25);
 		buttonKruskal.setBounds(138, 11, 128, 25);
+		buttonKruskal.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		buttonKruskal.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -274,6 +278,7 @@ public class Main extends JFrame{
 
 		btnColoriage.setEnabled(false);
 		btnColoriage.setBounds(128, 13, 145, 25);
+		btnColoriage.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		panel_5.add(btnColoriage);
 		btnColoriage.addActionListener(new ActionListener() {
 			@Override
