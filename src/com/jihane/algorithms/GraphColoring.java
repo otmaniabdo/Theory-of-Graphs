@@ -11,11 +11,11 @@ public class GraphColoring {
 	private LinkedList<Integer> voisins[];
 	private LinkedList<String> couleur = new LinkedList<String>(
 			Arrays.asList(
-					"RED", "GREEN", "GRAY", "YELLOW", "BLACK", "ORANGE", "BLUE", "CYAN", "PINK"
+					"BLUE", "CYAN", "PINK", "YELLOW", "BLACK", "ORANGE", "RED", "GREEN", "GRAY"
 					)
 			);
 	int result[];
-
+	
 	public GraphColoring(int nombreArcs)
 	{
 		this.nombreArcs = nombreArcs;
@@ -25,19 +25,21 @@ public class GraphColoring {
 			voisins[i] = new LinkedList();
 	}
 	
+	// Ajouter les voisions du chaque noeud à la liste voisions[]
 	public void adaptGraph(Graphe g) {
 		for(int i=0; i<g.getArcs().size(); i++) {
-			addEdge(g.getArcs().get(i).getSource().getId()-1, g.getArcs().get(i).getDestination().getId()-1);
+			ajouterArc(g.getArcs().get(i).getSource().getId()-1, g.getArcs().get(i).getDestination().getId()-1);
 		}
 	}
 
-	void addEdge(int source,int destination)
+	void ajouterArc(int source,int destination)
 	{
 		voisins[source].add(destination);
 		voisins[destination].add(source);
 	}
-
-	public void greedyColoring() {
+	
+	// Colorer les noeud
+	public void coloriage() {
 		Arrays.fill(result, -1);
 		result[0] = 0;
 		boolean disponible[] = new boolean[this.nombreArcs];
@@ -59,6 +61,7 @@ public class GraphColoring {
 		}
 	}
 	
+	// retourner la couleur de chaque noeud
 	public String getCouleur(int i) {
 		return couleur.get(result[i]);
 	}

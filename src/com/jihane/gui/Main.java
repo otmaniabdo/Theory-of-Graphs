@@ -251,10 +251,13 @@ public class Main extends JFrame{
 				Graphe graphe = new Graphe(arcs, noeuds);
 				KruskalAlgorithm ks = new KruskalAlgorithm(graphe);
 				logField.setText(" **** Kruskal : ");
-				for (Arc arc : ks.execute()) {
+				LinkedList<Arc> listKruskal = ks.execute();
+				for (Arc arc : listKruskal) {
 					logField.setText(logField.getText() + arc.toPath());
 				}
-
+				
+				panel_4.removeAll();
+				panel_4.add(ks.DrawGraph(noeuds,listKruskal,choice.getSelectedItem()));
 			}
 		});
 		panel_3.add(buttonKruskal);
@@ -282,7 +285,7 @@ public class Main extends JFrame{
 			        // Setup up a new vertex to paint transformer...
 			        GraphColoring gc = new GraphColoring(graphe.getArcs().size());
 			        gc.adaptGraph(graphe);
-			        gc.greedyColoring();;
+			        gc.coloriage();
 			        Transformer<Integer,Paint> vertexPaint = new Transformer<Integer,Paint>() {
 			            @Override
 						public Paint transform(Integer i) {
@@ -325,7 +328,7 @@ public class Main extends JFrame{
 				}
 			}
 		});
-		btnColor.setBounds(0, 11, 97, 25);
+		btnColor.setBounds(10, 11, 97, 25);
 		panel_3.add(btnColor);
 		
 		btnDjikstra.addActionListener(new ActionListener() {
