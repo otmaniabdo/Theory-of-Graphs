@@ -69,7 +69,6 @@ public class Main extends JFrame{
 			public void run() {
 				try {
 					Main window = new Main();
-//					window.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -330,7 +329,6 @@ public class Main extends JFrame{
 		panel_3.add(btnColor);
 		
 		btnDjikstra.addActionListener(new ActionListener() {
-			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				
 				AlgorithmeDijkstra ad = new AlgorithmeDijkstra(graphe);
