@@ -71,6 +71,7 @@ public class Main extends JFrame{
 			public void run() {
 				try {
 					Main window = new Main();
+					window.frame.setLocationRelativeTo(null);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -107,6 +108,7 @@ public class Main extends JFrame{
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setBackground(new Color(255, 255, 255));
 		frame.setBounds(100, 0, 1093, 750);
