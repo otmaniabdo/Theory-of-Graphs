@@ -283,7 +283,7 @@ public class Main extends JFrame{
 			        // Setup up a new vertex to paint transformer...
 			        GraphColoring gc = new GraphColoring(graphe.getArcs().size());
 			        gc.adaptGraph(graphe);
-			        gc.greedyColoring();;
+			        gc.coloriage();
 			        Transformer<Integer,Paint> vertexPaint = new Transformer<Integer,Paint>() {
 			            @Override
 						public Paint transform(Integer i) {
