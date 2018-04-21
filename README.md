@@ -1,5 +1,5 @@
-# Theory-of-Graphs
-implementation of Theory of graphs
- - Dijkstra
- - Kruskal
- - coloring
+# Graph Theory
+Graphs Theory Implementation
+ - Dijkstra Algorithm
+ - Kruskal Algorithm
+ - Coloring Graph
