@@ -71,7 +71,6 @@ public class Main extends JFrame{
 			public void run() {
 				try {
 					Main window = new Main();
-//					window.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -254,10 +253,13 @@ public class Main extends JFrame{
 				Graphe graphe = new Graphe(arcs, noeuds);
 				KruskalAlgorithm ks = new KruskalAlgorithm(graphe);
 				logField.setText(" **** Kruskal : ");
-				for (Arc arc : ks.execute()) {
+				LinkedList<Arc> listKruskal = ks.execute();
+				for (Arc arc : listKruskal) {
 					logField.setText(logField.getText() + arc.toPath());
 				}
-
+				
+				panel_4.removeAll();
+				panel_4.add(ks.DrawGraph(noeuds,listKruskal,choice.getSelectedItem()));
 			}
 		});
 		panel_3.add(buttonKruskal);
@@ -339,7 +341,6 @@ public class Main extends JFrame{
 		});
 		
 		btnDjikstra.addActionListener(new ActionListener() {
-			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				
 				AlgorithmeDijkstra ad = new AlgorithmeDijkstra(graphe);
