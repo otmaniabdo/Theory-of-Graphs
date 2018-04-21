@@ -217,7 +217,7 @@ public class Main extends JFrame{
 		JTextArea logField = new JTextArea();
 		logField.setBackground(new Color(255, 255, 204));
 		logField.setForeground(new Color(0, 0, 0));
-		logField.setBounds(454, 142, 631, 47);
+		logField.setBounds(447, 133, 620, 54);
 		frame.getContentPane().add(logField);
 		panel_1.setLayout(null);
 		
@@ -336,7 +336,11 @@ public class Main extends JFrame{
 				AlgorithmeDijkstra ad = new AlgorithmeDijkstra(graphe);
 				Noeud source = noeuds.get(Integer.parseInt(cbDjikstraDebut.getSelectedItem().toString())-1);
 				Noeud destination = noeuds.get(Integer.parseInt(cbDjikstraFin.getSelectedItem().toString())-1);
+				LinkedList<Noeud> chemin = ad.dessinerChemin(source, destination);
 				logField.setText(ad.plusCourtChemin(source, destination));
+				panel_4.removeAll();
+				panel_4.add(ad.DrawGraph(graphe, chemin,choice.getSelectedItem()));
+
 			}
 		});
 	}
