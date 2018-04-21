@@ -1,5 +1,10 @@
 package com.jihane.algorithms;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Paint;
+import java.awt.Stroke;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -7,9 +12,21 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.collections15.Transformer;
+
+import com.jihane.gui.DrawingGraph;
 import com.jihane.models.Arc;
 import com.jihane.models.Graphe;
 import com.jihane.models.Noeud;
+
+import edu.uci.ics.jung.algorithms.layout.CircleLayout;
+import edu.uci.ics.jung.algorithms.layout.FRLayout;
+import edu.uci.ics.jung.algorithms.layout.Layout;
+import edu.uci.ics.jung.algorithms.layout.SpringLayout;
+import edu.uci.ics.jung.algorithms.layout.SpringLayout2;
+import edu.uci.ics.jung.visualization.BasicVisualizationServer;
+import edu.uci.ics.jung.visualization.decorators.ToStringLabeller;
+import edu.uci.ics.jung.visualization.renderers.Renderer.VertexLabel.Position;
 
 public class AlgorithmeDijkstra {
 
@@ -121,5 +138,66 @@ public class AlgorithmeDijkstra {
     
     public String plusCourtChemin(Noeud source, Noeud destination) {
     	return this.dessinerChemin(source, destination).toString();
+    }
+    
+    public BasicVisualizationServer<Integer, String> DrawGraph(Graphe graphe, LinkedList<Noeud> chemin,String GrapheLayout) {
+		DrawingGraph grph = new DrawingGraph(graphe.getArcs(),graphe.getNoeuds().size());
+		Layout<Integer, String> layout;
+		if(GrapheLayout.equals("FRLayout")) {
+			layout = new FRLayout<>(grph.getGraph());
+		}else if(GrapheLayout.equals("CircleLayout")) {
+			layout = new CircleLayout<>(grph.getGraph());
+		}else if(GrapheLayout.equals("SpringLayout")){
+			layout = new SpringLayout<>(grph.getGraph());
+		}else{
+			layout = new SpringLayout2<>(grph.getGraph());
+		}
+		
+        layout.setSize(new Dimension(480, 480));
+		BasicVisualizationServer<Integer,String> vv = new BasicVisualizationServer<Integer,String>(layout);
+        vv.setPreferredSize(new Dimension(511, 511));       
+        // Setup up a new vertex to paint transformer...
+        Transformer<Integer,Paint> vertexPaint = new Transformer<Integer,Paint>() {
+            public Paint transform(Integer i) {
+            	if(FindNoeuds(chemin, i)) {
+                    System.out.println("Red");
+                    return Color.RED;
+            	}
+            	else {
+                	System.out.println("Green");
+            		return Color.GREEN;
+            	}
+            }
+        };  
+        // Set up a new stroke Transformer for the edges
+        float dash[] = {10.0f};
+        final Stroke edgeStroke = new BasicStroke(1.0f, BasicStroke.CAP_BUTT,
+             BasicStroke.JOIN_MITER, 10.0f, dash, 0.0f);
+        Transformer<String, Stroke> edgeStrokeTransformer = new Transformer<String, Stroke>() {
+            public Stroke transform(String s) {
+                return edgeStroke;
+            }
+        };
+        
+        vv.getRenderContext().setVertexFillPaintTransformer(vertexPaint);
+        vv.getRenderContext().setEdgeStrokeTransformer(edgeStrokeTransformer);
+        vv.getRenderContext().setVertexLabelTransformer(new ToStringLabeller());
+        vv.getRenderContext().setEdgeLabelTransformer(new ToStringLabeller());
+        vv.getRenderer().getVertexLabelRenderer().setPosition(Position.CNTR); 
+    	System.out.println("Done");
+
+        return vv;
+    }
+    
+    public boolean FindNoeuds(LinkedList<Noeud> noeuds,int i) {
+    	for(int j = 0;j < noeuds.size();j++) {
+    		if(i == noeuds.get(j).getId()) {
+            	System.out.println("NOEUD EXISTE");
+    			return true;
+    		}
+    	}
+    	System.out.println("NOEUD NOT EXISTE");
+
+		return false;
     }
 }
