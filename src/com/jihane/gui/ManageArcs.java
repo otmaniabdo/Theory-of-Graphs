@@ -1,11 +1,13 @@
 package com.jihane.gui;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 import org.apache.commons.collections15.Transformer;
 
@@ -21,7 +23,10 @@ import edu.uci.ics.jung.visualization.BasicVisualizationServer;
 import edu.uci.ics.jung.visualization.decorators.ToStringLabeller;
 import edu.uci.ics.jung.visualization.renderers.Renderer.VertexLabel.Position;
 
+import javax.swing.DefaultCellEditor;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -36,7 +41,6 @@ public class ManageArcs extends JFrame {
 	JTable table = new JTable(new DefaultTableModel(new Object[]{"Arc ID", "Poids", "Source", "Destination"}, 0));
 	DefaultTableModel model = (DefaultTableModel) table.getModel();
 
-	
 	/**
 	 * Create the frame.
 	 */
@@ -46,7 +50,9 @@ public class ManageArcs extends JFrame {
 		setBounds(100, 100, 512, 427);
 		getContentPane().setLayout(null);
 		setLocationRelativeTo(null);
-		this.dessinerTable(nombreArcs);
+
+		this.dessinerTable(nombreArcs, noeuds.size());
+
 		JScrollPane js = new JScrollPane(table);
 		js.setBounds(0, 42, 494, 292);
 		getContentPane().add(js);
@@ -101,6 +107,8 @@ public class ManageArcs extends JFrame {
 					setVisible(false);
 					window.btnDjikstra.setEnabled(true);
 					window.buttonKruskal.setEnabled(true);
+					window.btnColoriage.setEnabled(true);
+					window.chckbxOrient.setSelected(orientation);
 					window.frame.setVisible(true);
 				} catch (Exception e1) {
 					e1.printStackTrace();
@@ -115,10 +123,16 @@ public class ManageArcs extends JFrame {
 		getContentPane().add(lblNommezLesArcs);
 	}
 
-	public void dessinerTable(int nombreArcs) {
+	public void dessinerTable(int nombreArcs, int nombreNoeuds) {
+		JComboBox<Integer> cb = new JComboBox<Integer>();
+		TableColumn sourceColumn = table.getColumnModel().getColumn(2);
+		TableColumn destinationColumn = table.getColumnModel().getColumn(3);
 		for(int i=1; i<=nombreArcs; i++) {
-			model.addRow(new Object[]{i, "", "", "", ""});
+			model.addRow(new Object[]{i});
 		}
+		this.getArray(cb, nombreNoeuds);
+		sourceColumn.setCellEditor(new DefaultCellEditor(cb));
+		destinationColumn.setCellEditor(new DefaultCellEditor(cb));
 	}
 	
 	public LinkedList<Arc> nommerArcs(JTable table, LinkedList<Noeud> noeuds,  int nombreArcs) {
@@ -132,5 +146,11 @@ public class ManageArcs extends JFrame {
 			arcs.add(arc);
 		}
 		return arcs;
+	}
+	
+	public void getArray(JComboBox<Integer> cb, int nbr) {
+		ArrayList<Integer> arl = new ArrayList<Integer>();
+		for(int i=1; i<=nbr; i++)	arl.add(i);
+		cb.setModel(new DefaultComboBoxModel(arl.toArray()));
 	}
 }

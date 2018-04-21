@@ -24,6 +24,7 @@ import edu.uci.ics.jung.visualization.decorators.ToStringLabeller;
 import edu.uci.ics.jung.visualization.renderers.Renderer.VertexLabel.Position;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -56,6 +57,7 @@ public class Main extends JFrame{
 	public JButton btnDjikstra = new JButton("Djikstra");
 	public JButton buttonKruskal = new JButton("Kruskal");
 	public JCheckBox chckbxOrient = new JCheckBox("Orient\u00E9");
+	public JButton btnColoriage = new JButton("Colorier le graphe");
 
 	JComboBox cbDjikstraDebut;
 	JComboBox cbDjikstraFin;
@@ -266,8 +268,17 @@ public class Main extends JFrame{
 			}
 		});
 		panel_3.add(buttonKruskal);
-		JButton btnColor = new JButton("color");
-		btnColor.addActionListener(new ActionListener() {
+		
+		JPanel panel_5 = new JPanel();
+		panel_5.setLayout(null);
+		panel_5.setBackground(new Color(85, 55, 118));
+		panel_5.setBounds(10, 313, 420, 50);
+		panel.add(panel_5);
+
+		btnColoriage.setEnabled(false);
+		btnColoriage.setBounds(128, 13, 145, 25);
+		panel_5.add(btnColoriage);
+		btnColoriage.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -333,20 +344,29 @@ public class Main extends JFrame{
 				}
 			}
 		});
-		btnColor.setBounds(10, 11, 97, 25);
-		panel_3.add(btnColor);
 		
 		btnDjikstra.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				AlgorithmeDijkstra ad = new AlgorithmeDijkstra(graphe);
-				Noeud source = noeuds.get(Integer.parseInt(cbDjikstraDebut.getSelectedItem().toString())-1);
-				Noeud destination = noeuds.get(Integer.parseInt(cbDjikstraFin.getSelectedItem().toString())-1);
-				LinkedList<Noeud> chemin = ad.dessinerChemin(source, destination);
-				logField.setText(ad.plusCourtChemin(source, destination));
-				panel_4.removeAll();
-				panel_4.add(ad.DrawGraph(graphe, chemin,choice.getSelectedItem(),chckbxOrient.isSelected()));
-
+				if(cbDjikstraDebut.getSelectedItem() != null) {
+					if(cbDjikstraFin.getSelectedItem() != null) {
+						Noeud source = noeuds.get(Integer.parseInt(cbDjikstraDebut.getSelectedItem().toString())-1);
+						Noeud destination = noeuds.get(Integer.parseInt(cbDjikstraFin.getSelectedItem().toString())-1);
+						LinkedList<Noeud> chemin = ad.dessinerChemin(source, destination);
+						logField.setText(ad.plusCourtChemin(source, destination));
+						panel_4.removeAll();
+						panel_4.add(ad.DrawGraph(graphe, chemin,choice.getSelectedItem(),chckbxOrient.isSelected()));
+					}else {
+						JOptionPane.showMessageDialog(null, "Vous devez saisir le noeud destination");
+					}
+				}else {
+					if(cbDjikstraFin.getSelectedItem() == null) {
+						JOptionPane.showMessageDialog(null, "Vous devez saisir les noeud source et destination");
+					}else {
+						JOptionPane.showMessageDialog(null, "Vous devez saisir le noeud source");
+					}
+				}
 			}
 		});
 	}
@@ -356,10 +376,6 @@ public class Main extends JFrame{
 		for(int i=1; i<=nbr; i++)	arl.add(i);
 		this.cbDjikstraDebut.setModel(new DefaultComboBoxModel(arl.toArray()));
 		this.cbDjikstraFin.setModel(new DefaultComboBoxModel(arl.toArray()));
-//		for (int i=0; i<arl.size(); i++) {
-//			this.cbDjikstraDebut.addItem(arl.get(i).toString());
-//			this.cbDjikstraFin.addItem(arl.get(i).toString());
-//		}
 	}
 
 	public LinkedList<Noeud> getNoeuds() {
