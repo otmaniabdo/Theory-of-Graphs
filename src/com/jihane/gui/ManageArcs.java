@@ -44,7 +44,7 @@ public class ManageArcs extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ManageArcs(LinkedList<Noeud> noeuds, int nombreArcs, String GrapheLayout) {
+	public ManageArcs(LinkedList<Noeud> noeuds, int nombreArcs, String GrapheLayout,boolean orientation) {
 		getContentPane().setBackground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 512, 427);
@@ -65,7 +65,7 @@ public class ManageArcs extends JFrame {
 					JFrame frame;
 					LinkedList<Arc> arcs = nommerArcs(table, noeuds, nombreArcs);
 					Main window = new Main(arcs, noeuds.size(), nombreArcs);
-					DrawingGraph grph = new DrawingGraph(arcs,noeuds.size());
+					DrawingGraph grph = new DrawingGraph(arcs,noeuds.size(),orientation);
 					Layout<Integer, String> layout;
 					if(GrapheLayout.equals("FRLayout")) {
 						layout = new FRLayout<>(grph.g);
@@ -108,6 +108,7 @@ public class ManageArcs extends JFrame {
 					window.btnDjikstra.setEnabled(true);
 					window.buttonKruskal.setEnabled(true);
 					window.btnColoriage.setEnabled(true);
+					window.chckbxOrient.setSelected(orientation);
 					window.frame.setVisible(true);
 				} catch (Exception e1) {
 					e1.printStackTrace();
