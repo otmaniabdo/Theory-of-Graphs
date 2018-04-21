@@ -46,6 +46,7 @@ public class KruskalAlgorithm {
 }
 
 class PoidsComparator implements Comparator<Arc>{  
+	@Override
 	public int compare(Arc a1,Arc a2){  
 		
 		if(a1.getPoids() == a2.getPoids())  

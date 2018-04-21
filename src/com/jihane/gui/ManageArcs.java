@@ -53,6 +53,7 @@ public class ManageArcs extends JFrame {
 		
 		JButton btnNewButton = new JButton("Valider");
 		btnNewButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
 					JFrame frame;
@@ -75,8 +76,9 @@ public class ManageArcs extends JFrame {
 			        vv.setPreferredSize(new Dimension(511, 511));       
 			        // Setup up a new vertex to paint transformer...
 			        Transformer<Integer,Paint> vertexPaint = new Transformer<Integer,Paint>() {
-			            public Paint transform(Integer i) {
-			                return Color.GREEN;
+			            @Override
+						public Paint transform(Integer i) {
+			                return Color.RED;
 			            }
 			        };  
 			        // Set up a new stroke Transformer for the edges
@@ -84,7 +86,8 @@ public class ManageArcs extends JFrame {
 			        final Stroke edgeStroke = new BasicStroke(1.0f, BasicStroke.CAP_BUTT,
 			             BasicStroke.JOIN_MITER, 10.0f, dash, 0.0f);
 			        Transformer<String, Stroke> edgeStrokeTransformer = new Transformer<String, Stroke>() {
-			            public Stroke transform(String s) {
+			            @Override
+						public Stroke transform(String s) {
 			                return edgeStroke;
 			            }
 			        };

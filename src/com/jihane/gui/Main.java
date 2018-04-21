@@ -5,11 +5,23 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
+import org.apache.commons.collections15.Transformer;
+
 import com.jihane.algorithms.AlgorithmeDijkstra;
+import com.jihane.algorithms.GraphColoring;
 import com.jihane.algorithms.KruskalAlgorithm;
 import com.jihane.models.Arc;
 import com.jihane.models.Graphe;
 import com.jihane.models.Noeud;
+
+import edu.uci.ics.jung.algorithms.layout.CircleLayout;
+import edu.uci.ics.jung.algorithms.layout.FRLayout;
+import edu.uci.ics.jung.algorithms.layout.Layout;
+import edu.uci.ics.jung.algorithms.layout.SpringLayout;
+import edu.uci.ics.jung.algorithms.layout.SpringLayout2;
+import edu.uci.ics.jung.visualization.BasicVisualizationServer;
+import edu.uci.ics.jung.visualization.decorators.ToStringLabeller;
+import edu.uci.ics.jung.visualization.renderers.Renderer.VertexLabel.Position;
 
 import javax.swing.JLabel;
 import javax.swing.DefaultComboBoxModel;
@@ -20,17 +32,18 @@ import java.util.LinkedList;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 import java.awt.Color;
+import java.awt.Dimension;
+
 import javax.swing.JTextArea;
-import java.awt.FlowLayout;
-import javax.swing.border.TitledBorder;
-import javax.swing.UIManager;
 import java.awt.Font;
-import javax.swing.SwingConstants;
+import java.awt.Paint;
+import java.awt.Stroke;
+
 import javax.swing.JSeparator;
-import java.awt.Window.Type;
 import javax.swing.JComboBox;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.BasicStroke;
 import java.awt.Choice;
 
 public class Main extends JFrame{
@@ -46,12 +59,13 @@ public class Main extends JFrame{
 	JComboBox cbDjikstraFin;
 	static LinkedList<Noeud> noeuds = new LinkedList<Noeud>();
 	static LinkedList<Arc> arcs = new LinkedList<Arc>();
-
+	static Graphe graphe;
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					Main window = new Main();
@@ -83,6 +97,8 @@ public class Main extends JFrame{
 		
 		nombreNoeudsField.setText(Integer.toString(nombreNoeuds));
 		nombreArcsField.setText(Integer.toString(nombreArcs));
+		
+		graphe = new Graphe(arcs, noeuds);
 	}
 
 	/**
@@ -168,6 +184,7 @@ public class Main extends JFrame{
 		choice.add("SpringLayout2");
 		panel_2.add(choice);
 		btnValiderArcs.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				int nombreArcs = Integer.parseInt(nombreArcsField.getText());
 				
@@ -176,6 +193,7 @@ public class Main extends JFrame{
 			}
 		});
 		btnValiderNoeuds.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 
 
@@ -229,6 +247,7 @@ public class Main extends JFrame{
 		buttonKruskal.setBounds(280, 13, 128, 25);
 		buttonKruskal.setBounds(138, 11, 128, 25);
 		buttonKruskal.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				Graphe graphe = new Graphe(arcs, noeuds);
 				KruskalAlgorithm ks = new KruskalAlgorithm(graphe);
@@ -240,11 +259,80 @@ public class Main extends JFrame{
 			}
 		});
 		panel_3.add(buttonKruskal);
+		JButton btnColor = new JButton("color");
+		btnColor.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+			        panel_4.removeAll();
+					DrawingGraph grph = new DrawingGraph(graphe.getArcs(), graphe.getNoeuds().size());
+					Layout<Integer, String> layout;
+					if(choice.getSelectedItem().equals("FRLayout")) {
+						layout = new FRLayout<>(grph.g);
+					}else if(choice.getSelectedItem().equals("CircleLayout")) {
+						layout = new CircleLayout<>(grph.g);
+					}else if(choice.getSelectedItem().equals("SpringLayout")){
+						layout = new SpringLayout<>(grph.g);
+					}else{
+						layout = new SpringLayout2<>(grph.g);
+					}
+					
+			        layout.setSize(new Dimension(480, 480));
+					BasicVisualizationServer<Integer,String> vv = new BasicVisualizationServer<Integer,String>(layout);
+			        vv.setPreferredSize(new Dimension(511, 511));       
+			        // Setup up a new vertex to paint transformer...
+			        GraphColoring gc = new GraphColoring(graphe.getArcs().size());
+			        gc.adaptGraph(graphe);
+			        gc.greedyColoring();;
+			        Transformer<Integer,Paint> vertexPaint = new Transformer<Integer,Paint>() {
+			            @Override
+						public Paint transform(Integer i) {
+			            	switch (gc.getCouleur(i-1)) {
+			            		case "GREEN" : return Color.GREEN;
+			            		case "BLUE" : return Color.BLUE;
+			            		case "YELLOW" : return Color.YELLOW;
+			            		case "GRAY" : return Color.GRAY;
+			            		case "RED" : return Color.RED;
+			            		case "ORANGE" : return Color.ORANGE;
+			            		case "CYAN" : return Color.CYAN;
+			            		case "PINK" : return Color.PINK;
+			            	}
+							return Color.MAGENTA;
+						}
+			        };  
+			        // Set up a new stroke Transformer for the edges
+			        float dash[] = {10.0f};
+			        final Stroke edgeStroke = new BasicStroke(1.0f, BasicStroke.CAP_BUTT,
+			             BasicStroke.JOIN_MITER, 10.0f, dash, 0.0f);
+			        Transformer<String, Stroke> edgeStrokeTransformer = new Transformer<String, Stroke>() {
+			            @Override
+						public Stroke transform(String s) {
+			                return edgeStroke;
+			            }
+			        };
+			        
+			        vv.getRenderContext().setVertexFillPaintTransformer(vertexPaint);
+			        vv.getRenderContext().setEdgeStrokeTransformer(edgeStrokeTransformer);
+			        vv.getRenderContext().setVertexLabelTransformer(new ToStringLabeller());
+			        vv.getRenderContext().setEdgeLabelTransformer(new ToStringLabeller());
+			        vv.getRenderer().getVertexLabelRenderer().setPosition(Position.CNTR); 
+			        panel_4.add(vv);
+					setVisible(false);
+					btnDjikstra.setEnabled(true);
+					buttonKruskal.setEnabled(true);
+					frame.setVisible(true);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnColor.setBounds(0, 11, 97, 25);
+		panel_3.add(btnColor);
 		
 		btnDjikstra.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				
-				Graphe graphe = new Graphe(arcs, noeuds);
 				AlgorithmeDijkstra ad = new AlgorithmeDijkstra(graphe);
 				Noeud source = noeuds.get(Integer.parseInt(cbDjikstraDebut.getSelectedItem().toString())-1);
 				Noeud destination = noeuds.get(Integer.parseInt(cbDjikstraFin.getSelectedItem().toString())-1);
@@ -269,7 +357,7 @@ public class Main extends JFrame{
 	}
 
 	public void setNoeuds(LinkedList<Noeud> noeuds) {
-		this.noeuds = noeuds;
+		Main.noeuds = noeuds;
 	}
 
 	public LinkedList<Arc> getArcs() {
@@ -277,6 +365,6 @@ public class Main extends JFrame{
 	}
 
 	public void setArcs(LinkedList<Arc> arcs) {
-		this.arcs = arcs;
+		Main.arcs = arcs;
 	}
 }
