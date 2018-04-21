@@ -132,11 +132,13 @@ public class Main extends JFrame{
 		panel_1.setBounds(10, 193, 420, 50);
 		panel.add(panel_1);
 
-		panel_4.setBounds(494, 189, 511, 511);
+		panel_4.setBounds(444, 200, 631, 500);
 		frame.getContentPane().add(panel_4);
 
 		nombreNoeudsField = new JTextField();
-		nombreNoeudsField.setBounds(311, 23, 116, 22);
+		nombreNoeudsField.setBorder(null);
+		nombreNoeudsField.setBounds(311, 23, 140, 22);
+		nombreNoeudsField.setBackground(new Color(110, 89, 222));
 		panel_2.add(nombreNoeudsField);
 		nombreNoeudsField.setColumns(10);
 		
@@ -158,7 +160,9 @@ public class Main extends JFrame{
 		panel_2.add(lblSaisissezLeNombre);
 		
 		nombreArcsField = new JTextField();
-		nombreArcsField.setBounds(311, 59, 116, 22);
+		nombreArcsField.setBorder(null);
+		nombreArcsField.setBounds(311, 59, 140, 22);
+		nombreArcsField.setBackground(new Color(110, 89, 222));
 		panel_2.add(nombreArcsField);
 		nombreArcsField.setColumns(10);
 		
@@ -183,12 +187,20 @@ public class Main extends JFrame{
 		panel_2.add(btnValiderArcs);
 		
 		Choice choice = new Choice();
-		choice.setBounds(311, 87, 116, 20);
+		choice.setBounds(311, 99, 140, 22);
 		choice.add("FRLayout");
 		choice.add("CircleLayout");
 		choice.add("SpringLayout");
 		choice.add("SpringLayout2");
 		panel_2.add(choice);
+		
+		JSeparator separator_1 = new JSeparator();
+		separator_1.setBounds(311, 47, 140, 7);
+		panel_2.add(separator_1);
+		
+		JSeparator separator_2 = new JSeparator();
+		separator_2.setBounds(311, 86, 140, 7);
+		panel_2.add(separator_2);
 		btnValiderArcs.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -223,7 +235,7 @@ public class Main extends JFrame{
 		JTextArea logField = new JTextArea();
 		logField.setBackground(new Color(255, 255, 204));
 		logField.setForeground(new Color(0, 0, 0));
-		logField.setBounds(447, 133, 620, 54);
+		logField.setBounds(444, 144, 631, 43);
 		frame.getContentPane().add(logField);
 		panel_1.setLayout(null);
 		
