@@ -24,6 +24,7 @@ import edu.uci.ics.jung.visualization.decorators.ToStringLabeller;
 import edu.uci.ics.jung.visualization.renderers.Renderer.VertexLabel.Position;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -334,12 +335,24 @@ public class Main extends JFrame{
 			public void actionPerformed(ActionEvent arg0) {
 				
 				AlgorithmeDijkstra ad = new AlgorithmeDijkstra(graphe);
-				Noeud source = noeuds.get(Integer.parseInt(cbDjikstraDebut.getSelectedItem().toString())-1);
-				Noeud destination = noeuds.get(Integer.parseInt(cbDjikstraFin.getSelectedItem().toString())-1);
-				LinkedList<Noeud> chemin = ad.dessinerChemin(source, destination);
-				logField.setText(ad.plusCourtChemin(source, destination));
-				panel_4.removeAll();
-				panel_4.add(ad.DrawGraph(graphe, chemin,choice.getSelectedItem()));
+				if(cbDjikstraDebut.getSelectedItem() != null) {
+					if(cbDjikstraFin.getSelectedItem() != null) {
+						Noeud source = noeuds.get(Integer.parseInt(cbDjikstraDebut.getSelectedItem().toString())-1);
+						Noeud destination = noeuds.get(Integer.parseInt(cbDjikstraFin.getSelectedItem().toString())-1);
+						LinkedList<Noeud> chemin = ad.dessinerChemin(source, destination);
+						logField.setText(ad.plusCourtChemin(source, destination));
+						panel_4.removeAll();
+						panel_4.add(ad.DrawGraph(graphe, chemin,choice.getSelectedItem()));
+					}else {
+						JOptionPane.showMessageDialog(null, "Vous devez saisir le noeud destination");
+					}
+				}else {
+					if(cbDjikstraFin.getSelectedItem() == null) {
+						JOptionPane.showMessageDialog(null, "Vous devez saisir les noeud source et destination");
+					}else {
+						JOptionPane.showMessageDialog(null, "Vous devez saisir le noeud source");
+					}
+				}
 
 			}
 		});
@@ -350,10 +363,6 @@ public class Main extends JFrame{
 		for(int i=1; i<=nbr; i++)	arl.add(i);
 		this.cbDjikstraDebut.setModel(new DefaultComboBoxModel(arl.toArray()));
 		this.cbDjikstraFin.setModel(new DefaultComboBoxModel(arl.toArray()));
-//		for (int i=0; i<arl.size(); i++) {
-//			this.cbDjikstraDebut.addItem(arl.get(i).toString());
-//			this.cbDjikstraFin.addItem(arl.get(i).toString());
-//		}
 	}
 
 	public LinkedList<Noeud> getNoeuds() {
