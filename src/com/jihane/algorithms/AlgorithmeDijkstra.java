@@ -81,7 +81,7 @@ public class AlgorithmeDijkstra {
     	if(!orientation) {
     		for(Arc arc : this.getGraphe().getArcs()) {
     			arcs.add(arc);
-    			arcs.add(new Arc(this.getGraphe().getArcs().size()+i,arc.getPoids(),arc.getDestination(),arc.getSource(),false));
+    			arcs.add(new Arc(this.getGraphe().getArcs().size()+i,arc.getPoids(),arc.getDestination(),arc.getSource()));
     			i++;
     		}
     	}else {

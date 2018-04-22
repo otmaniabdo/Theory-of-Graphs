@@ -7,20 +7,18 @@ public class Arc {
 	private int poids;
 	private Noeud source;
 	private Noeud destination;
-	private boolean orientation = false;
 
 
 	public Arc() {
 		super();
 	}
 
-	public Arc(int id, int poids, Noeud source, Noeud destination, boolean orientation) {
+	public Arc(int id, int poids, Noeud source, Noeud destination) {
 		super();
 		this.id = id;
 		this.poids = poids;
 		this.source = source;
 		this.destination = destination;
-		this.orientation = orientation;
 	}
 
 	public int getId() {
@@ -55,18 +53,10 @@ public class Arc {
 		this.destination = destination;
 	}
 
-	public boolean isOrientation() {
-		return orientation;
-	}
-
-	public void setOrientation(boolean orientation) {
-		this.orientation = orientation;
-	}
-
 	@Override
 	public String toString() {
 		return "Arc [id=" + id + ", poids=" + poids + ", source=" + source + ", destination=" + destination
-				+ ", orientation=" + orientation + "]";
+				+ "]";
 	}
 	public String toPath() {
 		return "-->Arc(id ="+id+",Poid = "+poids+")";
