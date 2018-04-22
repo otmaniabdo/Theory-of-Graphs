@@ -34,10 +34,12 @@ public class AlgorithmeDijkstra {
     private Set<Noeud> noeudsInclus, noeudsExclus;
     private Map<Noeud, Noeud> predecesseurs;
     private Map<Noeud, Integer> distance;
+    private boolean orientation;
    
-	public AlgorithmeDijkstra(Graphe graphe) {
+	public AlgorithmeDijkstra(Graphe graphe, boolean orientation) {
 		super();
 		this.graphe = graphe;
+		this.orientation = orientation;
 	}
 
     public Graphe getGraphe() {
@@ -74,11 +76,25 @@ public class AlgorithmeDijkstra {
 	
     private LinkedList<Noeud> getVoisions(Noeud noeud) {
     	LinkedList<Noeud> voisions = new LinkedList<Noeud>();
-        for (Arc arc : this.getGraphe().getArcs()) {
+    	LinkedList<Arc> arcs = new LinkedList<Arc>();
+    	int i = 1;
+    	if(!orientation) {
+    		for(Arc arc : this.getGraphe().getArcs()) {
+    			arcs.add(arc);
+    			arcs.add(new Arc(this.getGraphe().getArcs().size()+i,arc.getPoids(),arc.getDestination(),arc.getSource(),false));
+    			i++;
+    		}
+    	}else {
+    		arcs = this.getGraphe().getArcs();
+    	}
+    	
+        for (Arc arc : arcs) {
             if (arc.getSource().equals(noeud) && !estInclu(arc.getDestination())) {
                 voisions.add(arc.getDestination());
             }
         }
+        for(Arc arc : arcs)
+        	System.out.println(arc);
         return voisions;
     }
     

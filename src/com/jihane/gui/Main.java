@@ -369,7 +369,7 @@ public class Main extends JFrame{
 		btnDjikstra.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				AlgorithmeDijkstra ad = new AlgorithmeDijkstra(graphe);
+				AlgorithmeDijkstra ad = new AlgorithmeDijkstra(graphe,chckbxOrient.isSelected());
 				if(cbDjikstraDebut.getSelectedItem() != null) {
 					if(cbDjikstraFin.getSelectedItem() != null) {
 						Noeud source = noeuds.get(Integer.parseInt(cbDjikstraDebut.getSelectedItem().toString())-1);
