@@ -65,6 +65,8 @@ public class Main extends JFrame{
 	static LinkedList<Noeud> noeuds = new LinkedList<Noeud>();
 	static LinkedList<Arc> arcs = new LinkedList<Arc>();
 	static Graphe graphe;
+	static boolean orientation;
+
 	/**
 	 * Launch the application.
 	 */
@@ -206,8 +208,9 @@ public class Main extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int nombreArcs = Integer.parseInt(nombreArcsField.getText());
-				
-				new ManageArcs(noeuds, nombreArcs,choice.getSelectedItem(),chckbxOrient.isSelected()).setVisible(true);
+				orientation = chckbxOrient.isSelected();
+
+				new ManageArcs(noeuds, nombreArcs,choice.getSelectedItem(), orientation).setVisible(true);
 				frame.setVisible(false);
 			}
 		});
@@ -276,7 +279,7 @@ public class Main extends JFrame{
 				}
 				
 				panel_4.removeAll();
-				panel_4.add(ks.DrawGraph(noeuds,listKruskal,choice.getSelectedItem(), chckbxOrient.isSelected()));
+				panel_4.add(ks.DrawGraph(noeuds,listKruskal,choice.getSelectedItem(), orientation));
 			}
 		});
 		panel_3.add(buttonKruskal);
@@ -296,7 +299,7 @@ public class Main extends JFrame{
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 			        panel_4.removeAll();
-					DrawingGraph grph = new DrawingGraph(graphe.getArcs(), graphe.getNoeuds().size(),chckbxOrient.isSelected());
+					DrawingGraph grph = new DrawingGraph(graphe.getArcs(), graphe.getNoeuds().size(), orientation);
 					Layout<Integer, String> layout;
 					if(choice.getSelectedItem().equals("FRLayout")) {
 						layout = new FRLayout<>(grph.g);
@@ -361,7 +364,7 @@ public class Main extends JFrame{
 		btnDjikstra.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				AlgorithmeDijkstra ad = new AlgorithmeDijkstra(graphe,chckbxOrient.isSelected());
+				AlgorithmeDijkstra ad = new AlgorithmeDijkstra(graphe, orientation);
 				if(cbDjikstraDebut.getSelectedItem() != null) {
 					if(cbDjikstraFin.getSelectedItem() != null) {
 						Noeud source = noeuds.get(Integer.parseInt(cbDjikstraDebut.getSelectedItem().toString())-1);
@@ -369,7 +372,7 @@ public class Main extends JFrame{
 						LinkedList<Noeud> chemin = ad.dessinerChemin(source, destination);
 						logField.setText(ad.plusCourtChemin(source, destination));
 						panel_4.removeAll();
-						panel_4.add(ad.DrawGraph(graphe, chemin,choice.getSelectedItem(),chckbxOrient.isSelected()));
+						panel_4.add(ad.DrawGraph(graphe, chemin,choice.getSelectedItem(), orientation));
 					}else {
 						JOptionPane.showMessageDialog(null, "Vous devez saisir le noeud destination");
 					}
