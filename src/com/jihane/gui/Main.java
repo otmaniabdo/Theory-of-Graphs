@@ -223,7 +223,6 @@ public class Main extends JFrame{
 						for(int i=1; i<=nombreNoeuds; i++) {
 							noeuds.add(new Noeud(i, Integer.toString(i)));
 						}
-						getArray(Integer.parseInt(nombreNoeudsField.getText()));
 						btnValiderArcs.setEnabled(true);
 					}
 

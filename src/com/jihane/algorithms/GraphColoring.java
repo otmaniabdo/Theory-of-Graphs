@@ -32,8 +32,7 @@ public class GraphColoring {
 		}
 	}
 
-	void ajouterArc(int source,int destination)
-	{
+	void ajouterArc(int source,int destination) {
 		voisins[source].add(destination);
 		voisins[destination].add(source);
 	}
