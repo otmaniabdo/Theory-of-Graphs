@@ -106,6 +106,7 @@ public class Main extends JFrame{
 		nombreArcsField.setText(Integer.toString(nombreArcs));
 		
 		graphe = new Graphe(arcs, noeuds);
+		System.out.println(graphe.isReflexive(orientation));
 	}
 
 	/**

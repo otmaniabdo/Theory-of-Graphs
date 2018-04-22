@@ -72,7 +72,19 @@ public class Graphe {
 			else return false;
 		}
 	}
-	
+
+	public boolean isReflexive(boolean orientation) {
+		int countVertexes = 0;
+		for(int i=0; i<this.getArcs().size(); i++) {
+			LinkedList<Integer> vertex = new LinkedList<Integer>();
+			if (this.getArcs().get(i).getSource().getId() == this.getArcs().get(i).getDestination().getId()) {
+				countVertexes++;
+			}
+		}
+		if (countVertexes == this.noeuds.size()) return true;
+		else return false;
+	}
+
 	public boolean isSymmetric(boolean orientation) {
 		LinkedList<LinkedList<Integer>> sources = new LinkedList<LinkedList<Integer>>();
 		LinkedList<LinkedList<Integer>> destinations = new LinkedList<LinkedList<Integer>>();
