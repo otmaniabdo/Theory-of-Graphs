@@ -169,12 +169,6 @@ public class Main extends JFrame{
 		nombreArcsField.setColumns(10);
 		
 		cbDjikstraDebut = new JComboBox();
-		cbDjikstraDebut.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				getArray(Integer.parseInt(nombreNoeudsField.getText()));
-			}
-		});
 		cbDjikstraDebut.setBounds(12, 14, 122, 22);
 		panel_1.add(cbDjikstraDebut);
 		
@@ -220,8 +214,6 @@ public class Main extends JFrame{
 		btnValiderNoeuds.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-
-
 				if(nombreNoeudsField.getText().equals("")) {
 				}else {
 					if(Integer.parseInt(nombreNoeudsField.getText()) == 0) {						
@@ -231,6 +223,7 @@ public class Main extends JFrame{
 						for(int i=1; i<=nombreNoeuds; i++) {
 							noeuds.add(new Noeud(i, Integer.toString(i)));
 						}
+						getArray(Integer.parseInt(nombreNoeudsField.getText()));
 						btnValiderArcs.setEnabled(true);
 					}
 
