@@ -2,6 +2,8 @@ package com.jihane.models;
 import java.util.Collections;
 import java.util.LinkedList;
 
+import javax.management.Descriptor;
+
 import com.jihane.models.Arc;
 import com.jihane.models.Noeud;
 
@@ -57,9 +59,6 @@ public class Graphe {
 			}
 			Collections.sort(sources);
 			Collections.sort(destinations);
-			System.out.println(sources.size() +" ------- "+ destinations.size());
-			System.out.println(sources);
-			System.out.println(destinations);
 			if(sources.equals(destinations)) return true;
 			else return false;
 		} else {
@@ -71,6 +70,49 @@ public class Graphe {
 			}
 			if(this.getNoeuds().size() == count) return true;
 			else return false;
+		}
+	}
+	
+	public boolean isSymmetric(boolean orientation) {
+		LinkedList<LinkedList<Integer>> sources = new LinkedList<LinkedList<Integer>>();
+		LinkedList<LinkedList<Integer>> destinations = new LinkedList<LinkedList<Integer>>();
+		int countSource = 0;
+		int countDestination = 0;
+		if (!orientation) {
+			if (this.isConnexe(orientation)) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			if (this.isConnexe(orientation)) {
+				for(int i=0; i<this.getArcs().size(); i++) {
+					LinkedList<Integer> source = new LinkedList<Integer>();
+					LinkedList<Integer> destination = new LinkedList<Integer>();
+					source.add(this.getArcs().get(i).getSource().getId());
+					source.add(this.getArcs().get(i).getDestination().getId());
+					destination.add(this.getArcs().get(i).getDestination().getId());
+					destination.add(this.getArcs().get(i).getSource().getId());
+					sources.add(source);
+					destinations.add(destination);
+				}
+				for(int i=0; i<sources.size(); i++) {
+					for(int j=0; j<destinations.size(); j++) {
+						if (sources.get(i).equals(destinations.get(j))) countSource++;					
+					}				
+				}
+				for(int i=0; i<destinations.size(); i++) {
+					for(int j=0; j<sources.size(); j++) {
+						if (destinations.get(i).equals(sources.get(j))) countDestination++;					
+					}		
+				}
+				System.out.println(sources);
+				System.out.println(destinations);
+				if(countSource == sources.size() && countDestination == destinations.size()) return true;
+				else return false;
+			} else {
+				return false;			
+			}
 		}
 	}
 }
