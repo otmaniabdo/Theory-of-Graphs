@@ -106,9 +106,46 @@ public class Graphe {
 						if (destinations.get(i).equals(sources.get(j))) countDestination++;					
 					}		
 				}
+				if(countSource == sources.size() && countDestination == destinations.size()) return true;
+				else return false;
+			} else {
+				return false;			
+			}
+		}
+	}
+	
+	public boolean isAntisymmetric(boolean orientation) {
+		LinkedList<LinkedList<Integer>> sources = new LinkedList<LinkedList<Integer>>();
+		LinkedList<LinkedList<Integer>> destinations = new LinkedList<LinkedList<Integer>>();
+		int countSource = 0;
+		int countDestination = 0;
+		if (!orientation) {
+			return false;
+		} else {
+			if (this.isConnexe(orientation)) {
+				for(int i=0; i<this.getArcs().size(); i++) {
+					LinkedList<Integer> source = new LinkedList<Integer>();
+					LinkedList<Integer> destination = new LinkedList<Integer>();
+					source.add(this.getArcs().get(i).getSource().getId());
+					source.add(this.getArcs().get(i).getDestination().getId());
+					destination.add(this.getArcs().get(i).getDestination().getId());
+					destination.add(this.getArcs().get(i).getSource().getId());
+					sources.add(source);
+					destinations.add(destination);
+				}
+				for(int i=0; i<sources.size(); i++) {
+					for(int j=0; j<destinations.size(); j++) {
+						if (sources.get(i).equals(destinations.get(j))) countSource++;					
+					}				
+				}
+				for(int i=0; i<destinations.size(); i++) {
+					for(int j=0; j<sources.size(); j++) {
+						if (destinations.get(i).equals(sources.get(j))) countDestination++;					
+					}		
+				}
 				System.out.println(sources);
 				System.out.println(destinations);
-				if(countSource == sources.size() && countDestination == destinations.size()) return true;
+				if(countSource == 0 && countDestination == 0) return true;
 				else return false;
 			} else {
 				return false;			
