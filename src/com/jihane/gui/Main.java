@@ -106,9 +106,6 @@ public class Main extends JFrame{
 		nombreArcsField.setText(Integer.toString(nombreArcs));
 		
 		graphe = new Graphe(arcs, noeuds);
-		System.out.println(graphe.isConnexe(orientation));
-		System.out.println(graphe.isSymmetric(orientation));
-		System.out.println(graphe.isAntisymmetric(orientation));
 	}
 
 	/**
