@@ -164,4 +164,15 @@ public class Graphe {
 			}
 		}
 	}
+	
+	public void verifyProperties(boolean orientation) {
+		if (this.isConnexe(orientation)) System.out.println("Ce graphe est Connexe");
+		else System.out.println("Ce graphe n'est pas Connexe");
+		if (this.isReflexive(orientation)) System.out.println("Ce graphe est Reflexif");
+		else System.out.println("Ce graphe n'est pas Reflexif");
+		if (this.isSymmetric(orientation)) System.out.println("Ce graphe est Symétrique");
+		else System.out.println("Ce graphe n'est pas Symétrique");
+		if (this.isAntisymmetric(orientation)) System.out.println("Ce graphe est Antisymétrique");
+		else System.out.println("Ce graphe n'est pas Antisymétrique");
+	}
 }
