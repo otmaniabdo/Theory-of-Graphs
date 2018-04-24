@@ -106,7 +106,7 @@ public class Main extends JFrame{
 		nombreArcsField.setText(Integer.toString(nombreArcs));
 		
 		graphe = new Graphe(arcs, noeuds);
-		graphe.verifyProperties(orientation);
+		graphe.verifyProperties(chckbxOrient.isSelected());
 	}
 
 	/**
@@ -238,7 +238,7 @@ public class Main extends JFrame{
 		JTextArea logField = new JTextArea();
 		logField.setBackground(new Color(255, 255, 204));
 		logField.setForeground(new Color(0, 0, 0));
-		logField.setBounds(444, 144, 631, 43);
+		logField.setBounds(444, 131, 631, 71);
 		frame.getContentPane().add(logField);
 		panel_1.setLayout(null);
 		
@@ -273,14 +273,14 @@ public class Main extends JFrame{
 			public void actionPerformed(ActionEvent arg0) {
 				Graphe graphe = new Graphe(arcs, noeuds);
 				KruskalAlgorithm ks = new KruskalAlgorithm(graphe);
-				logField.setText(" **** Kruskal : ");
+				logField.setText(" **** Kruskal : \n");
 				LinkedList<Arc> listKruskal = ks.execute();
 				for (Arc arc : listKruskal) {
 					logField.setText(logField.getText() + arc.toPath());
 				}
-				
+				logField.setText(logField.getText()+"\n Poids minimum : "+ks.getGraphMinPoids());
 				panel_4.removeAll();
-				panel_4.add(ks.DrawGraph(noeuds,listKruskal,choice.getSelectedItem(), orientation));
+				panel_4.add(ks.DrawGraph(noeuds,listKruskal,choice.getSelectedItem(), chckbxOrient.isSelected()));
 			}
 		});
 		panel_3.add(buttonKruskal);
@@ -300,7 +300,7 @@ public class Main extends JFrame{
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 			        panel_4.removeAll();
-					DrawingGraph grph = new DrawingGraph(graphe.getArcs(), graphe.getNoeuds().size(), orientation);
+					DrawingGraph grph = new DrawingGraph(graphe.getArcs(), graphe.getNoeuds().size(), chckbxOrient.isSelected());
 					Layout<Integer, String> layout;
 					if(choice.getSelectedItem().equals("FRLayout")) {
 						layout = new FRLayout<>(grph.g);
@@ -365,7 +365,7 @@ public class Main extends JFrame{
 		btnDjikstra.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				AlgorithmeDijkstra ad = new AlgorithmeDijkstra(graphe, orientation);
+				AlgorithmeDijkstra ad = new AlgorithmeDijkstra(graphe, chckbxOrient.isSelected());
 				if(cbDjikstraDebut.getSelectedItem() != null) {
 					if(cbDjikstraFin.getSelectedItem() != null) {
 						Noeud source = noeuds.get(Integer.parseInt(cbDjikstraDebut.getSelectedItem().toString())-1);
@@ -373,7 +373,7 @@ public class Main extends JFrame{
 						LinkedList<Noeud> chemin = ad.dessinerChemin(source, destination);
 						logField.setText(ad.plusCourtChemin(source, destination));
 						panel_4.removeAll();
-						panel_4.add(ad.DrawGraph(graphe, chemin,choice.getSelectedItem(), orientation));
+						panel_4.add(ad.DrawGraph(graphe, chemin,choice.getSelectedItem(), chckbxOrient.isSelected()));
 					}else {
 						JOptionPane.showMessageDialog(null, "Vous devez saisir le noeud destination");
 					}

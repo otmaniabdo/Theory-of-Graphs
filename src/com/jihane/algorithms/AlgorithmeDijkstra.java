@@ -87,14 +87,15 @@ public class AlgorithmeDijkstra {
     	}else {
     		arcs = this.getGraphe().getArcs();
     	}
-    	
+        for(Arc arc : arcs) {
+        	System.out.println(arc);
+        }
         for (Arc arc : arcs) {
             if (arc.getSource().equals(noeud) && !estInclu(arc.getDestination())) {
                 voisions.add(arc.getDestination());
             }
         }
-        for(Arc arc : arcs)
-        	System.out.println(arc);
+
         return voisions;
     }
     
