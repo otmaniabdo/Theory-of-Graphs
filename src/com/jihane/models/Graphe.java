@@ -39,6 +39,23 @@ public class Graphe {
 		this.noeuds = noeuds;
 	}
 	
+	public boolean isArbre(boolean orientation) {
+		if(orientation) {
+			return false;
+		} else {
+			if(this.isConnexe(orientation)) {
+				for(int i=0; i<this.getArcs().size(); i++) {
+					if(this.getArcs().get(i).getSource() == this.getArcs().get(i).getDestination()) {
+						return false;
+					}
+				}
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
+
 	public boolean isConnexe(boolean orientation) {
 		LinkedList<Integer> sources = new LinkedList<Integer>();
 		LinkedList<Integer> destinations = new LinkedList<Integer>();
