@@ -41,11 +41,9 @@ public class Graphe {
 	
 	public boolean isArbre(boolean orientation) {
 		if(orientation) {
-			System.out.println("true orientation");
 			return false;
 		} else {
 			if(this.isConnexe(orientation)) {
-				System.out.println("connexe");
 				for(int i=0; i<this.getArcs().size(); i++) {
 					if(this.getArcs().get(i).getSource() == this.getArcs().get(i).getDestination()) {
 						return false;
@@ -53,7 +51,6 @@ public class Graphe {
 				}
 				return true;
 			} else {
-				System.out.println("not connexe");
 				return false;
 			}
 		}
@@ -94,9 +91,6 @@ public class Graphe {
 		Collections.sort(sources);
 		Collections.sort(destinations);
 
-		System.out.println(nds);
-		System.out.println(sources);
-		System.out.println(destinations);
 		if(nds.size() == this.getNoeuds().size())	return true;
 		else if(sources.equals(destinations) && !sources.isEmpty() && !destinations.isEmpty()) return true;
 		else return false;

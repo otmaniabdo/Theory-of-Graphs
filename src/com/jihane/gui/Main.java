@@ -303,17 +303,16 @@ public class Main extends JFrame{
 		panel_6.setBounds(10, 445, 420, 50);
 		panel.add(panel_6);
 		
-//		btnPrufer.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent arg0) {
-//				boolean isArbre = graphe.isArbre(orientation);
-//				System.out.println(orientation);
-//				if(isArbre) {
-//					JOptionPane.showMessageDialog(null, "Ce graphe est un arbre");
-//				} else {
-//					JOptionPane.showMessageDialog(null, "Ce graphe n'est pas un arbre");
-//				}
-//			}
-//		});
+		btnPrufer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				boolean isArbre = graphe.isArbre(orientation);
+				if(isArbre) {
+					JOptionPane.showMessageDialog(null, "Ce graphe est un arbre");
+				} else {
+					JOptionPane.showMessageDialog(null, "Ce graphe n'est pas un arbre");
+				}
+			}
+		});
 		btnPrufer.setEnabled(false);
 		btnPrufer.setBounds(128, 13, 145, 25);
 		panel_6.add(btnPrufer);
