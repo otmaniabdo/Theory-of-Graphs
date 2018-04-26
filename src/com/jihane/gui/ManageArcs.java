@@ -108,6 +108,8 @@ public class ManageArcs extends JFrame {
 					window.btnDjikstra.setEnabled(true);
 					window.buttonKruskal.setEnabled(true);
 					window.btnColoriage.setEnabled(true);
+					window.btnPrufer.setEnabled(true);
+					window.btnVerifyProperties.setEnabled(true);
 					window.chckbxOrient.setSelected(orientation);
 					window.getArray(noeuds.size());
 					window.frame.setVisible(true);

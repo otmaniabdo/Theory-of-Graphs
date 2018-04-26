@@ -59,6 +59,8 @@ public class Main extends JFrame{
 	public JButton buttonKruskal = new JButton("Kruskal");
 	public JCheckBox chckbxOrient = new JCheckBox("Orient\u00E9");
 	public JButton btnColoriage = new JButton("Colorier le graphe");
+	public JButton btnPrufer = new JButton("Codage de Prufer");
+	public JButton btnVerifyProperties = new JButton("V\u00E9rifier les prori\u00E9t\u00E9s");
 
 	JComboBox cbDjikstraDebut;
 	JComboBox cbDjikstraFin;
@@ -106,7 +108,6 @@ public class Main extends JFrame{
 		nombreArcsField.setText(Integer.toString(nombreArcs));
 		
 		graphe = new Graphe(arcs, noeuds);
-		graphe.verifyProperties(chckbxOrient.isSelected());
 	}
 
 	/**
@@ -262,7 +263,7 @@ public class Main extends JFrame{
 		JPanel panel_3 = new JPanel();
 		panel_3.setLayout(null);
 		panel_3.setBackground(new Color(85, 55, 118));
-		panel_3.setBounds(10, 253, 420, 50);
+		panel_3.setBounds(10, 256, 420, 50);
 		panel.add(panel_3);
 		
 		buttonKruskal.setEnabled(false);
@@ -288,13 +289,49 @@ public class Main extends JFrame{
 		JPanel panel_5 = new JPanel();
 		panel_5.setLayout(null);
 		panel_5.setBackground(new Color(85, 55, 118));
-		panel_5.setBounds(10, 313, 420, 50);
+		panel_5.setBounds(10, 319, 420, 50);
 		panel.add(panel_5);
 
 		btnColoriage.setEnabled(false);
 		btnColoriage.setBounds(128, 13, 145, 25);
 		btnColoriage.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		panel_5.add(btnColoriage);
+		
+		JPanel panel_6 = new JPanel();
+		panel_6.setLayout(null);
+		panel_6.setBackground(new Color(85, 55, 118));
+		panel_6.setBounds(10, 445, 420, 50);
+		panel.add(panel_6);
+		
+//		btnPrufer.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent arg0) {
+//				boolean isArbre = graphe.isArbre(orientation);
+//				System.out.println(orientation);
+//				if(isArbre) {
+//					JOptionPane.showMessageDialog(null, "Ce graphe est un arbre");
+//				} else {
+//					JOptionPane.showMessageDialog(null, "Ce graphe n'est pas un arbre");
+//				}
+//			}
+//		});
+		btnPrufer.setEnabled(false);
+		btnPrufer.setBounds(128, 13, 145, 25);
+		panel_6.add(btnPrufer);
+		
+		JPanel panel_7 = new JPanel();
+		panel_7.setLayout(null);
+		panel_7.setBackground(new Color(85, 55, 118));
+		panel_7.setBounds(10, 382, 420, 50);
+		panel.add(panel_7);
+		btnVerifyProperties.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JOptionPane.showMessageDialog(null, graphe.verifyProperties(chckbxOrient.isSelected()));
+			}
+		});
+		
+		btnVerifyProperties.setEnabled(false);
+		btnVerifyProperties.setBounds(122, 13, 162, 25);
+		panel_7.add(btnVerifyProperties);
 		btnColoriage.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {

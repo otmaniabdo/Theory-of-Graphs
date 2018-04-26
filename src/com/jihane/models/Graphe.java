@@ -41,9 +41,11 @@ public class Graphe {
 	
 	public boolean isArbre(boolean orientation) {
 		if(orientation) {
+			System.out.println("true orientation");
 			return false;
 		} else {
 			if(this.isConnexe(orientation)) {
+				System.out.println("connexe");
 				for(int i=0; i<this.getArcs().size(); i++) {
 					if(this.getArcs().get(i).getSource() == this.getArcs().get(i).getDestination()) {
 						return false;
@@ -51,6 +53,7 @@ public class Graphe {
 				}
 				return true;
 			} else {
+				System.out.println("not connexe");
 				return false;
 			}
 		}
@@ -59,21 +62,43 @@ public class Graphe {
 	public boolean isConnexe(boolean orientation) {
 		LinkedList<Integer> sources = new LinkedList<Integer>();
 		LinkedList<Integer> destinations = new LinkedList<Integer>();
-		for(int i=0; i<this.getArcs().size(); i++) {
-			if(!sources.contains(this.getArcs().get(i).getSource().getId())
-					&& this.getArcs().get(i).getSource().getId() != this.getArcs().get(i).getDestination().getId()) {
-				
-				sources.add(this.getArcs().get(i).getSource().getId());
+		LinkedList<Integer> nds = new LinkedList<Integer>();
+		if(orientation) {
+			for(int i=0; i<this.getArcs().size(); i++) {
+				if(!sources.contains(this.getArcs().get(i).getSource().getId())
+						&& this.getArcs().get(i).getSource().getId() != this.getArcs().get(i).getDestination().getId()) {
+					
+					sources.add(this.getArcs().get(i).getSource().getId());
+				}
+				if(!destinations.contains(this.getArcs().get(i).getDestination().getId())
+						&& this.getArcs().get(i).getSource().getId() != this.getArcs().get(i).getDestination().getId()) {
+					
+					destinations.add(this.getArcs().get(i).getDestination().getId());
+				}
 			}
-			if(!destinations.contains(this.getArcs().get(i).getDestination().getId())
-					&& this.getArcs().get(i).getSource().getId() != this.getArcs().get(i).getDestination().getId()) {
-				
-				destinations.add(this.getArcs().get(i).getDestination().getId());
+		} else {
+			for(int i=0; i<this.getArcs().size(); i++) {
+				if(!nds.contains(this.getArcs().get(i).getSource().getId())
+						&& this.getArcs().get(i).getSource().getId() != this.getArcs().get(i).getDestination().getId()) {
+					
+					nds.add(this.getArcs().get(i).getSource().getId());
+				}
+				if(!nds.contains(this.getArcs().get(i).getDestination().getId())
+						&& this.getArcs().get(i).getSource().getId() != this.getArcs().get(i).getDestination().getId()) {
+					
+					nds.add(this.getArcs().get(i).getDestination().getId());
+				}
 			}
 		}
+
 		Collections.sort(sources);
 		Collections.sort(destinations);
-		if(sources.equals(destinations) && !sources.isEmpty() && !destinations.isEmpty()) return true;
+
+		System.out.println(nds);
+		System.out.println(sources);
+		System.out.println(destinations);
+		if(nds.size() == this.getNoeuds().size())	return true;
+		else if(sources.equals(destinations) && !sources.isEmpty() && !destinations.isEmpty()) return true;
 		else return false;
 	}
 
@@ -214,16 +239,18 @@ public class Graphe {
 
 	}
 
-	public void verifyProperties(boolean orientation) {
-		if (this.isConnexe(orientation)) System.out.println("Ce graphe est Connexe");
-		else System.out.println("Ce graphe n'est pas Connexe");
-		if (this.isReflexive(orientation)) System.out.println("Ce graphe est Reflexif");
-		else System.out.println("Ce graphe n'est pas Reflexif");
-		if (this.isSymmetric(orientation)) System.out.println("Ce graphe est Symétrique");
-		else System.out.println("Ce graphe n'est pas Symétrique");
-		if (this.isAntisymmetric(orientation)) System.out.println("Ce graphe est Antisymétrique");
-		else System.out.println("Ce graphe n'est pas Antisymétrique");
-		if (this.isTransitive(orientation)) System.out.println("Ce graphe est Transitive");
-		else System.out.println("Ce graphe n'est pas Transitive");
+	public String verifyProperties(boolean orientation) {
+		String s = "";
+		if (this.isConnexe(orientation)) s = s + "Ce graphe est Connexe\n";
+		else s = s + "Ce graphe n'est pas Connexe\n";
+		if (this.isReflexive(orientation)) s = s + "Ce graphe est Reflexif\n";
+		else s = s + "Ce graphe n'est pas Reflexif\n";
+		if (this.isSymmetric(orientation)) s = s + "Ce graphe est Symétrique\n";
+		else s = s + "Ce graphe n'est pas Symétrique\n";
+		if (this.isAntisymmetric(orientation)) s = s + "Ce graphe est Antisymétrique\n";
+		else s = s + "Ce graphe n'est pas Antisymétrique\n";
+		if (this.isTransitive(orientation)) s = s + "Ce graphe est Transitive\n";
+		else s = s + "Ce graphe n'est pas Transitive\n";
+		return s;
 	}
 }
