@@ -60,6 +60,7 @@ public class Graphe {
 		LinkedList<Integer> sources = new LinkedList<Integer>();
 		LinkedList<Integer> destinations = new LinkedList<Integer>();
 		LinkedList<Integer> nds = new LinkedList<Integer>();
+		LinkedList<Integer> n = new LinkedList<Integer>();
 		if(orientation) {
 			for(int i=0; i<this.getArcs().size(); i++) {
 				if(!sources.contains(this.getArcs().get(i).getSource().getId())
@@ -75,23 +76,34 @@ public class Graphe {
 			}
 		} else {
 			for(int i=0; i<this.getArcs().size(); i++) {
+				if(i == 0) {
+					nds.add(this.getArcs().get(0).getSource().getId());
+					nds.add(this.getArcs().get(0).getDestination().getId());
+				}
 				if(!nds.contains(this.getArcs().get(i).getSource().getId())
-						&& this.getArcs().get(i).getSource().getId() != this.getArcs().get(i).getDestination().getId()) {
+						&& (nds.contains(this.getArcs().get(i).getSource().getId()) || nds.contains(this.getArcs().get(i).getDestination().getId()))) {
 					
 					nds.add(this.getArcs().get(i).getSource().getId());
 				}
 				if(!nds.contains(this.getArcs().get(i).getDestination().getId())
-						&& this.getArcs().get(i).getSource().getId() != this.getArcs().get(i).getDestination().getId()) {
+						&& (nds.contains(this.getArcs().get(i).getSource().getId()) || nds.contains(this.getArcs().get(i).getDestination().getId()))) {
 					
 					nds.add(this.getArcs().get(i).getDestination().getId());
 				}
 			}
 		}
 
+
+		for(int i=0; i<nds.size(); i++){
+			if(!n.contains(nds.get(i))) {
+				n.add(nds.get(i));
+			}
+		}
+		System.out.println(n);
 		Collections.sort(sources);
 		Collections.sort(destinations);
 
-		if(nds.size() == this.getNoeuds().size())	return true;
+		if(n.size() == this.getNoeuds().size())	return true;
 		else if(sources.equals(destinations) && !sources.isEmpty() && !destinations.isEmpty()) return true;
 		else return false;
 	}
