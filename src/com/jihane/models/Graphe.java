@@ -99,7 +99,7 @@ public class Graphe {
 				n.add(nds.get(i));
 			}
 		}
-		System.out.println(n);
+
 		Collections.sort(sources);
 		Collections.sort(destinations);
 

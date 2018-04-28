@@ -110,8 +110,7 @@ public class KruskalAlgorithm {
         vv.getRenderContext().setEdgeStrokeTransformer(edgeStrokeTransformer);
         vv.getRenderContext().setVertexLabelTransformer(new ToStringLabeller());
         vv.getRenderContext().setEdgeLabelTransformer(new ToStringLabeller());
-        vv.getRenderer().getVertexLabelRenderer().setPosition(Position.CNTR); 
-    	System.out.println("Done");
+        vv.getRenderer().getVertexLabelRenderer().setPosition(Position.CNTR);
 
         return vv;
     }
