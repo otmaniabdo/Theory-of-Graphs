@@ -1,8 +1,7 @@
 package com.jihane.models;
+
 import java.util.Collections;
 import java.util.LinkedList;
-
-import javax.management.Descriptor;
 
 import com.jihane.models.Arc;
 import com.jihane.models.Noeud;
@@ -200,16 +199,45 @@ public class Graphe {
 	public boolean isTransitive(boolean orientation) {
 		if(!orientation) {
 			if(this.isConnexe(orientation)) {
-				int count =0;
-				for(int i=0; i<this.getNoeuds().size(); i++) {
-					for(int j=0; j<this.getArcs().size(); j++) {
-						if(this.getArcs().get(j).getSource().getId() == this.getNoeuds().get(i).getId()) {
-							count++;
+				LinkedList<Arc> arcs = new LinkedList<Arc>();
+				arcs = this.getArcs();
+				int count = 0;
+				for(int i=0; i<arcs.size(); i++) {
+					Arc arc1 = new Arc();
+					arc1 = arcs.get(i);
+					for(int j=0; j<arcs.size(); j++) {
+						if((arcs.get(j).getSource().getId() == arc1.getDestination().getId()
+								|| arcs.get(j).getDestination().getId() == arc1.getDestination().getId())
+								&& arcs.get(j).getDestination().getId() != arc1.getSource().getId()
+								&& i!=j) {
+							System.out.println("if lewla");
+							Arc arc2 = new Arc();
+							arc2 = arcs.get(j);
+							for(int k=0; k<arcs.size(); k++) {
+								if((arcs.get(k).getSource().getId() == arc1.getSource().getId()
+										|| arcs.get(k).getSource().getId() == arc1.getDestination().getId())
+										&& (arcs.get(k).getDestination().getId() == arc2.getDestination().getId()
+										|| arcs.get(k).getDestination().getId() == arc2.getSource().getId())) {
+									System.out.println("if tannia");
+									count++;
+								}
+							}
 						}
 					}
 				}
-				if(count == this.getArcs().size())	return true;
+				System.out.println(count);
+				if(count == this.getNoeuds().size()*2)  return true;
 				else	return false;
+//				int count =0;
+//				for(int i=0; i<this.getNoeuds().size(); i++) {
+//					for(int j=0; j<this.getArcs().size(); j++) {
+//						if(this.getArcs().get(j).getSource().getId() == this.getNoeuds().get(i).getId()) {
+//							count++;
+//						}
+//					}
+//				}
+//				if(count == this.getArcs().size() && count != 0)	return true;
+//				else	return false;
 			} else {
 				return false;
 			}
