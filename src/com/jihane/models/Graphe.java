@@ -210,7 +210,6 @@ public class Graphe {
 								|| arcs.get(j).getDestination().getId() == arc1.getDestination().getId())
 								&& arcs.get(j).getDestination().getId() != arc1.getSource().getId()
 								&& i!=j) {
-							System.out.println("if lewla");
 							Arc arc2 = new Arc();
 							arc2 = arcs.get(j);
 							for(int k=0; k<arcs.size(); k++) {
@@ -218,14 +217,12 @@ public class Graphe {
 										|| arcs.get(k).getSource().getId() == arc1.getDestination().getId())
 										&& (arcs.get(k).getDestination().getId() == arc2.getDestination().getId()
 										|| arcs.get(k).getDestination().getId() == arc2.getSource().getId())) {
-									System.out.println("if tannia");
 									count++;
 								}
 							}
 						}
 					}
 				}
-				System.out.println(count);
 				if(count == this.getNoeuds().size()*2)  return true;
 				else	return false;
 //				int count =0;
