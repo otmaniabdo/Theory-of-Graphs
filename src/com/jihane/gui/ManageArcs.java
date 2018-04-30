@@ -45,7 +45,7 @@ public class ManageArcs extends JFrame {
 	 * Create the frame.
 	 */
 	public ManageArcs(LinkedList<Noeud> noeuds, int nombreArcs, String GrapheLayout,boolean orientation) {
-		getContentPane().setBackground(Color.WHITE);
+		getContentPane().setBackground(Color.CYAN);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 512, 427);
 		getContentPane().setLayout(null);

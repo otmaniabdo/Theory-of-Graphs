@@ -92,13 +92,14 @@ public class Graphe {
 			}
 		}
 
-
+		// Supprimer les doublants
 		for(int i=0; i<nds.size(); i++){
 			if(!n.contains(nds.get(i))) {
 				n.add(nds.get(i));
 			}
 		}
 
+		// Trier les deux listes: sources/destinations
 		Collections.sort(sources);
 		Collections.sort(destinations);
 
@@ -125,7 +126,20 @@ public class Graphe {
 		int countDestination = 0;
 		if (!orientation) {
 			if (this.isConnexe(orientation)) {
-				return true;
+				int total = 0;
+				for(int i=0; i<this.getNoeuds().size(); i++) {
+					int count = 0;
+					for(int j=0; j<this.getArcs().size(); j++) {
+						if(this.getArcs().get(j).getDestination().getId() != this.getArcs().get(j).getSource().getId()
+								&& (this.getArcs().get(j).getSource().getId() == this.getNoeuds().get(i).getId()
+									|| this.getArcs().get(j).getDestination().getId() == this.getNoeuds().get(i).getId())) {
+							count++;
+						}
+					}
+					if(count == this.getNoeuds().size()-1) total++;
+				}
+				if(total == this.getNoeuds().size())	return true;
+				else	return false;
 			} else {
 				return false;
 			}
@@ -225,16 +239,6 @@ public class Graphe {
 				}
 				if(count == this.getNoeuds().size()*2)  return true;
 				else	return false;
-//				int count =0;
-//				for(int i=0; i<this.getNoeuds().size(); i++) {
-//					for(int j=0; j<this.getArcs().size(); j++) {
-//						if(this.getArcs().get(j).getSource().getId() == this.getNoeuds().get(i).getId()) {
-//							count++;
-//						}
-//					}
-//				}
-//				if(count == this.getArcs().size() && count != 0)	return true;
-//				else	return false;
 			} else {
 				return false;
 			}
