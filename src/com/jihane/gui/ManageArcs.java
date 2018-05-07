@@ -46,7 +46,7 @@ public class ManageArcs extends JFrame {
 	 * Create the frame.
 	 */
 	public ManageArcs(LinkedList<Noeud> noeuds, int nombreArcs, String GrapheLayout,boolean orientation) {
-		getContentPane().setBackground(Color.WHITE);
+		getContentPane().setBackground(Color.CYAN);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 512, 427);
 		getContentPane().setLayout(null);
@@ -77,7 +77,6 @@ public class ManageArcs extends JFrame {
 					}else{
 						layout = new SpringLayout2<>(grph.g);
 					}
-
 			        layout.setSize(new Dimension(480, 480));
 					BasicVisualizationServer<Integer,String> vv = new BasicVisualizationServer<Integer,String>(layout);
 			        vv.setPreferredSize(new Dimension(511, 511));       

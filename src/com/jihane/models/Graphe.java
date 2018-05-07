@@ -1,8 +1,7 @@
 package com.jihane.models;
+
 import java.util.Collections;
 import java.util.LinkedList;
-
-import javax.management.Descriptor;
 
 import com.jihane.models.Arc;
 import com.jihane.models.Noeud;
@@ -60,6 +59,7 @@ public class Graphe {
 		LinkedList<Integer> sources = new LinkedList<Integer>();
 		LinkedList<Integer> destinations = new LinkedList<Integer>();
 		LinkedList<Integer> nds = new LinkedList<Integer>();
+		LinkedList<Integer> n = new LinkedList<Integer>();
 		if(orientation) {
 			for(int i=0; i<this.getArcs().size(); i++) {
 				if(!sources.contains(this.getArcs().get(i).getSource().getId())
@@ -75,23 +75,35 @@ public class Graphe {
 			}
 		} else {
 			for(int i=0; i<this.getArcs().size(); i++) {
+				if(i == 0) {
+					nds.add(this.getArcs().get(0).getSource().getId());
+					nds.add(this.getArcs().get(0).getDestination().getId());
+				}
 				if(!nds.contains(this.getArcs().get(i).getSource().getId())
-						&& this.getArcs().get(i).getSource().getId() != this.getArcs().get(i).getDestination().getId()) {
+						&& (nds.contains(this.getArcs().get(i).getSource().getId()) || nds.contains(this.getArcs().get(i).getDestination().getId()))) {
 					
 					nds.add(this.getArcs().get(i).getSource().getId());
 				}
 				if(!nds.contains(this.getArcs().get(i).getDestination().getId())
-						&& this.getArcs().get(i).getSource().getId() != this.getArcs().get(i).getDestination().getId()) {
+						&& (nds.contains(this.getArcs().get(i).getSource().getId()) || nds.contains(this.getArcs().get(i).getDestination().getId()))) {
 					
 					nds.add(this.getArcs().get(i).getDestination().getId());
 				}
 			}
 		}
 
+		// Supprimer les doublants
+		for(int i=0; i<nds.size(); i++){
+			if(!n.contains(nds.get(i))) {
+				n.add(nds.get(i));
+			}
+		}
+
+		// Trier les deux listes: sources/destinations
 		Collections.sort(sources);
 		Collections.sort(destinations);
 
-		if(nds.size() == this.getNoeuds().size())	return true;
+		if(n.size() == this.getNoeuds().size())	return true;
 		else if(sources.equals(destinations) && !sources.isEmpty() && !destinations.isEmpty()) return true;
 		else return false;
 	}
@@ -114,7 +126,20 @@ public class Graphe {
 		int countDestination = 0;
 		if (!orientation) {
 			if (this.isConnexe(orientation)) {
-				return true;
+				int total = 0;
+				for(int i=0; i<this.getNoeuds().size(); i++) {
+					int count = 0;
+					for(int j=0; j<this.getArcs().size(); j++) {
+						if(this.getArcs().get(j).getDestination().getId() != this.getArcs().get(j).getSource().getId()
+								&& (this.getArcs().get(j).getSource().getId() == this.getNoeuds().get(i).getId()
+									|| this.getArcs().get(j).getDestination().getId() == this.getNoeuds().get(i).getId())) {
+							count++;
+						}
+					}
+					if(count == this.getNoeuds().size()-1) total++;
+				}
+				if(total == this.getNoeuds().size())	return true;
+				else	return false;
 			} else {
 				return false;
 			}
@@ -188,15 +213,31 @@ public class Graphe {
 	public boolean isTransitive(boolean orientation) {
 		if(!orientation) {
 			if(this.isConnexe(orientation)) {
-				int count =0;
-				for(int i=0; i<this.getNoeuds().size(); i++) {
-					for(int j=0; j<this.getArcs().size(); j++) {
-						if(this.getArcs().get(j).getSource().getId() == this.getNoeuds().get(i).getId()) {
-							count++;
+				LinkedList<Arc> arcs = new LinkedList<Arc>();
+				arcs = this.getArcs();
+				int count = 0;
+				for(int i=0; i<arcs.size(); i++) {
+					Arc arc1 = new Arc();
+					arc1 = arcs.get(i);
+					for(int j=0; j<arcs.size(); j++) {
+						if((arcs.get(j).getSource().getId() == arc1.getDestination().getId()
+								|| arcs.get(j).getDestination().getId() == arc1.getDestination().getId())
+								&& arcs.get(j).getDestination().getId() != arc1.getSource().getId()
+								&& i!=j) {
+							Arc arc2 = new Arc();
+							arc2 = arcs.get(j);
+							for(int k=0; k<arcs.size(); k++) {
+								if((arcs.get(k).getSource().getId() == arc1.getSource().getId()
+										|| arcs.get(k).getSource().getId() == arc1.getDestination().getId())
+										&& (arcs.get(k).getDestination().getId() == arc2.getDestination().getId()
+										|| arcs.get(k).getDestination().getId() == arc2.getSource().getId())) {
+									count++;
+								}
+							}
 						}
 					}
 				}
-				if(count == this.getArcs().size())	return true;
+				if(count == this.getNoeuds().size()*2)  return true;
 				else	return false;
 			} else {
 				return false;

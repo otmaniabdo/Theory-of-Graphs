@@ -87,9 +87,6 @@ public class AlgorithmeDijkstra {
     	}else {
     		arcs = this.getGraphe().getArcs();
     	}
-        for(Arc arc : arcs) {
-        	System.out.println(arc);
-        }
         for (Arc arc : arcs) {
             if (arc.getSource().equals(noeud) && !estInclu(arc.getDestination())) {
                 voisions.add(arc.getDestination());
@@ -178,11 +175,9 @@ public class AlgorithmeDijkstra {
             @Override
 			public Paint transform(Integer i) {
             	if(FindNoeuds(chemin, i)) {
-                    System.out.println("Red");
                     return Color.GREEN;
             	}
             	else {
-                	System.out.println("Green");
             		return Color.RED;
             	}
             }
@@ -203,7 +198,6 @@ public class AlgorithmeDijkstra {
         vv.getRenderContext().setVertexLabelTransformer(new ToStringLabeller());
         vv.getRenderContext().setEdgeLabelTransformer(new ToStringLabeller());
         vv.getRenderer().getVertexLabelRenderer().setPosition(Position.CNTR); 
-    	System.out.println("Done");
 
         return vv;
     }
@@ -211,11 +205,9 @@ public class AlgorithmeDijkstra {
     public boolean FindNoeuds(LinkedList<Noeud> noeuds,int i) {
     	for(int j = 0;j < noeuds.size();j++) {
     		if(i == noeuds.get(j).getId()) {
-            	System.out.println("NOEUD EXISTE");
     			return true;
     		}
     	}
-    	System.out.println("NOEUD NOT EXISTE");
 
 		return false;
     }
