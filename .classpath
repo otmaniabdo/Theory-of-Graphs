@@ -10,5 +10,15 @@
 	<classpathentry kind="lib" path="jung-graph-impl-2.0.jar"/>
 	<classpathentry kind="lib" path="jung-visualization-2.0.jar"/>
 	<classpathentry kind="lib" path="miglayout15-swing.jar"/>
+	<classpathentry kind="lib" path="C:/Users/otman/Documents/lib/antlr4-runtime-4.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/otman/Documents/lib/commons-lang3-3.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/otman/Documents/lib/jgraph-5.13.0.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/otman/Documents/lib/jgrapht-core-1.1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/otman/Documents/lib/jgrapht-demo-1.1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/otman/Documents/lib/jgrapht-ext-1.1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/otman/Documents/lib/jgrapht-ext-1.1.0-uber.jar"/>
+	<classpathentry kind="lib" path="C:/Users/otman/Documents/lib/jgrapht-io-1.1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/otman/Documents/lib/jgrapht-io-1.1.0-uber.jar"/>
+	<classpathentry kind="lib" path="C:/Users/otman/Documents/lib/jgraphx-2.0.0.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
