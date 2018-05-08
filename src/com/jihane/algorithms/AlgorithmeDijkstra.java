@@ -51,6 +51,7 @@ public class AlgorithmeDijkstra {
 		this.graphe = graphe;
 	}
  
+	// Elle retourne la distance minimale de tous les voisins de Noeud
     private void trouverDistanceMinimal(Noeud noeud) {
         LinkedList<Noeud> adjacentNodes = getVoisions(noeud);
         for (Noeud destination : adjacentNodes) {
@@ -65,6 +66,7 @@ public class AlgorithmeDijkstra {
 
     }
 
+    // Elle retourne le poids entre les deux noeuds
 	private int getDistance(Noeud source, Noeud destination) {
         for (Arc arc : this.getGraphe().getArcs()) {
             if (arc.getSource().equals(source) && arc.getDestination().equals(destination)) {
@@ -74,6 +76,7 @@ public class AlgorithmeDijkstra {
         return -1; // Retourner -1 en cas d'erreur
     }
 	
+	// Elle retourne tous les voisins de noeud
     private LinkedList<Noeud> getVoisions(Noeud noeud) {
     	LinkedList<Noeud> voisions = new LinkedList<Noeud>();
     	LinkedList<Arc> arcs = new LinkedList<Arc>();

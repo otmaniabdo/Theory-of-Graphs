@@ -114,7 +114,7 @@ public class KruskalAlgorithm {
 
         return vv;
     }
-    
+    // Q ????
     public boolean isCyclic(Graphe graph, Arc arc, LinkedList<Arc> arcs) {
         LinkedList<Integer> adj[]; // Adjacency List Represntation
         adj = new LinkedList[graph.getNoeuds().size()];

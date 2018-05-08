@@ -126,20 +126,7 @@ public class Graphe {
 		int countDestination = 0;
 		if (!orientation) {
 			if (this.isConnexe(orientation)) {
-				int total = 0;
-				for(int i=0; i<this.getNoeuds().size(); i++) {
-					int count = 0;
-					for(int j=0; j<this.getArcs().size(); j++) {
-						if(this.getArcs().get(j).getDestination().getId() != this.getArcs().get(j).getSource().getId()
-								&& (this.getArcs().get(j).getSource().getId() == this.getNoeuds().get(i).getId()
-									|| this.getArcs().get(j).getDestination().getId() == this.getNoeuds().get(i).getId())) {
-							count++;
-						}
-					}
-					if(count == this.getNoeuds().size()-1) total++;
-				}
-				if(total == this.getNoeuds().size())	return true;
-				else	return false;
+				return true;
 			} else {
 				return false;
 			}

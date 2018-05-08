@@ -43,7 +43,7 @@ public class GraphColoring {
 		result[0] = 0;
 		boolean disponible[] = new boolean[this.nombreArcs];
 		Arrays.fill(disponible, true);
-		for (int u = 1; u < this.nombreArcs; u++)	{
+		for (int u = 1; u < this.nombreArcs; u++) {
 			Iterator<Integer> it = voisins[u].iterator() ;
 			while (it.hasNext()) {
 				int i = it.next();
