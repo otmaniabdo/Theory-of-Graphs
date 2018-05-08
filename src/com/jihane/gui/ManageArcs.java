@@ -11,6 +11,7 @@ import javax.swing.table.TableColumn;
 
 import org.apache.commons.collections15.Transformer;
 
+import com.jihane.models.Arbre;
 import com.jihane.models.Arc;
 import com.jihane.models.Noeud;
 
@@ -76,7 +77,6 @@ public class ManageArcs extends JFrame {
 					}else{
 						layout = new SpringLayout2<>(grph.g);
 					}
-					
 			        layout.setSize(new Dimension(480, 480));
 					BasicVisualizationServer<Integer,String> vv = new BasicVisualizationServer<Integer,String>(layout);
 			        vv.setPreferredSize(new Dimension(511, 511));       

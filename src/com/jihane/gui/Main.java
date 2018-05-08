@@ -10,6 +10,7 @@ import org.apache.commons.collections15.Transformer;
 import com.jihane.algorithms.AlgorithmeDijkstra;
 import com.jihane.algorithms.GraphColoring;
 import com.jihane.algorithms.KruskalAlgorithm;
+import com.jihane.models.Arbre;
 import com.jihane.models.Arc;
 import com.jihane.models.Graphe;
 import com.jihane.models.Noeud;
@@ -305,8 +306,8 @@ public class Main extends JFrame{
 		
 		btnPrufer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				boolean isArbre = graphe.isArbre(orientation);
-				if(isArbre) {
+				Arbre arbre = new Arbre(arcs,noeuds);
+				if(arbre.isArbre()) {
 					JOptionPane.showMessageDialog(null, "Ce graphe est un arbre");
 				} else {
 					JOptionPane.showMessageDialog(null, "Ce graphe n'est pas un arbre");
