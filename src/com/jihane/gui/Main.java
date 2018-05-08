@@ -10,6 +10,7 @@ import org.apache.commons.collections15.Transformer;
 import com.jihane.algorithms.AlgorithmeDijkstra;
 import com.jihane.algorithms.GraphColoring;
 import com.jihane.algorithms.KruskalAlgorithm;
+import com.jihane.algorithms.Prufer;
 import com.jihane.models.Arbre;
 import com.jihane.models.Arc;
 import com.jihane.models.Graphe;
@@ -60,8 +61,9 @@ public class Main extends JFrame{
 	public JButton buttonKruskal = new JButton("Kruskal");
 	public JCheckBox chckbxOrient = new JCheckBox("Orient\u00E9");
 	public JButton btnColoriage = new JButton("Colorier le graphe");
-	public JButton btnPrufer = new JButton("Codage de Prufer");
+	public JButton btnPrufer = new JButton("Arbre verification");
 	public JButton btnVerifyProperties = new JButton("V\u00E9rifier les prori\u00E9t\u00E9s");
+	public JButton buttonPrufer = new JButton("Codage de Prufer");
 
 	JComboBox cbDjikstraDebut;
 	JComboBox cbDjikstraFin;
@@ -309,6 +311,7 @@ public class Main extends JFrame{
 				Arbre arbre = new Arbre(arcs,noeuds);
 				if(arbre.isArbre()) {
 					JOptionPane.showMessageDialog(null, "Ce graphe est un arbre");
+					buttonPrufer.setEnabled(true);
 				} else {
 					JOptionPane.showMessageDialog(null, "Ce graphe n'est pas un arbre");
 				}
@@ -332,6 +335,22 @@ public class Main extends JFrame{
 		btnVerifyProperties.setEnabled(false);
 		btnVerifyProperties.setBounds(122, 13, 162, 25);
 		panel_7.add(btnVerifyProperties);
+		
+		JPanel panel_8 = new JPanel();
+		panel_8.setLayout(null);
+		panel_8.setBackground(new Color(85, 55, 118));
+		panel_8.setBounds(10, 506, 420, 50);
+		panel.add(panel_8);
+		
+		buttonPrufer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Arbre arbre = new Arbre(arcs,noeuds);
+				logField.setText("codage : "+Prufer.codage(arbre));
+			}
+		});
+		buttonPrufer.setEnabled(false);
+		buttonPrufer.setBounds(128, 13, 145, 25);
+		panel_8.add(buttonPrufer);
 		btnColoriage.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {

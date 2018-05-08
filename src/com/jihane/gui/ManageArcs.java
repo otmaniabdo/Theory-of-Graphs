@@ -11,6 +11,7 @@ import javax.swing.table.TableColumn;
 
 import org.apache.commons.collections15.Transformer;
 
+import com.jihane.algorithms.Prufer;
 import com.jihane.models.Arbre;
 import com.jihane.models.Arc;
 import com.jihane.models.Noeud;
