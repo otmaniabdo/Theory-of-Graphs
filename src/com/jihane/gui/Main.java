@@ -29,6 +29,8 @@ import javax.swing.JOptionPane;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.font.TextAttribute;
+import java.text.AttributedString;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.awt.event.ActionEvent;
@@ -44,8 +46,6 @@ import java.awt.Stroke;
 
 import javax.swing.JSeparator;
 import javax.swing.JComboBox;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.BasicStroke;
 import java.awt.Choice;
 import javax.swing.JCheckBox;
@@ -305,6 +305,7 @@ public class Main extends JFrame{
 		panel.add(panel_6);
 		
 		btnPrufer.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				Arbre arbre = new Arbre(arcs,noeuds);
 				if(arbre.isArbre()) {
@@ -324,6 +325,7 @@ public class Main extends JFrame{
 		panel_7.setBounds(10, 382, 420, 50);
 		panel.add(panel_7);
 		btnVerifyProperties.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				JOptionPane.showMessageDialog(null, graphe.verifyProperties(chckbxOrient.isSelected()));
 			}
@@ -400,6 +402,7 @@ public class Main extends JFrame{
 		});
 		
 		btnDjikstra.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				
 				AlgorithmeDijkstra ad = new AlgorithmeDijkstra(graphe, chckbxOrient.isSelected());
@@ -408,7 +411,12 @@ public class Main extends JFrame{
 						Noeud source = noeuds.get(Integer.parseInt(cbDjikstraDebut.getSelectedItem().toString())-1);
 						Noeud destination = noeuds.get(Integer.parseInt(cbDjikstraFin.getSelectedItem().toString())-1);
 						LinkedList<Noeud> chemin = ad.dessinerChemin(source, destination);
-						logField.setText(ad.plusCourtChemin(source, destination));
+						
+						Font font = new Font("LucidaSans", Font.PLAIN, 14);
+						AttributedString text= new AttributedString(ad.plusCourtChemin(source, destination));
+						text.addAttribute(TextAttribute.FONT, font);
+						logField.setText(text.toString());
+
 						panel_4.removeAll();
 						panel_4.add(ad.DrawGraph(graphe, chemin,choice.getSelectedItem(), chckbxOrient.isSelected()));
 					}else {
