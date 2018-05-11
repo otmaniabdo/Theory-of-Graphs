@@ -7,7 +7,7 @@ public class Arc {
 	private int poids;
 	private Noeud source;
 	private Noeud destination;
-
+	public boolean active = true;
 
 	public Arc() {
 		super();
