@@ -7,7 +7,7 @@ import com.jihane.models.Graphe;
 
 
 public class GraphColoring {
-	private int nombreArcs;
+	private int nombreNoeuds;
 	private LinkedList<Integer> voisins[];
 	private LinkedList<String> couleur = new LinkedList<String>(
 			Arrays.asList(
@@ -16,12 +16,12 @@ public class GraphColoring {
 			);
 	int result[];
 	
-	public GraphColoring(int nombreArcs)
+	public GraphColoring(int nombreNoeuds)
 	{
-		this.nombreArcs = nombreArcs;
-		result = new int[nombreArcs];
-		voisins = new LinkedList[nombreArcs];
-		for (int i=0; i<nombreArcs; ++i)
+		this.nombreNoeuds = nombreNoeuds;
+		result = new int[nombreNoeuds];
+		voisins = new LinkedList[nombreNoeuds];
+		for (int i=0; i<nombreNoeuds; ++i)
 			voisins[i] = new LinkedList();
 	}
 	
@@ -41,9 +41,9 @@ public class GraphColoring {
 	public void coloriage() {
 		Arrays.fill(result, -1);
 		result[0] = 0;
-		boolean disponible[] = new boolean[this.nombreArcs];
+		boolean disponible[] = new boolean[this.nombreNoeuds];
 		Arrays.fill(disponible, true);
-		for (int u = 1; u < this.nombreArcs; u++) {
+		for (int u = 1; u < this.nombreNoeuds; u++) {
 			Iterator<Integer> it = voisins[u].iterator() ;
 			while (it.hasNext()) {
 				int i = it.next();
@@ -51,7 +51,7 @@ public class GraphColoring {
 					disponible[result[i]] = false;
 			}
 			int couleur;
-			for (couleur = 0; couleur < this.nombreArcs; couleur++){
+			for (couleur = 0; couleur < this.nombreNoeuds; couleur++){
 				if (disponible[couleur])
 					break;
 			}

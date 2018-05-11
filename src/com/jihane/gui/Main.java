@@ -376,7 +376,7 @@ public class Main extends JFrame{
 					BasicVisualizationServer<Integer,String> vv = new BasicVisualizationServer<Integer,String>(layout);
 			        vv.setPreferredSize(new Dimension(511, 511));       
 			        // Setup up a new vertex to paint transformer...
-			        GraphColoring gc = new GraphColoring(graphe.getArcs().size());
+			        GraphColoring gc = new GraphColoring(graphe.getNoeuds().size());
 			        gc.adaptGraph(graphe);
 			        gc.coloriage();
 			        Transformer<Integer,Paint> vertexPaint = new Transformer<Integer,Paint>() {
