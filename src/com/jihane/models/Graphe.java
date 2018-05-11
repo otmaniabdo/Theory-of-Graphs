@@ -211,19 +211,24 @@ public class Graphe {
 				for(int i=0; i<arcs.size(); i++) {
 					Arc arc1 = new Arc();
 					arc1 = arcs.get(i);
-					for(int j=0; j<arcs.size(); j++) {
-						if((arcs.get(j).getSource().getId() == arc1.getDestination().getId()
-								|| arcs.get(j).getDestination().getId() == arc1.getDestination().getId())
-								&& arcs.get(j).getDestination().getId() != arc1.getSource().getId()
-								&& i!=j) {
-							Arc arc2 = new Arc();
-							arc2 = arcs.get(j);
-							for(int k=0; k<arcs.size(); k++) {
-								if((arcs.get(k).getSource().getId() == arc1.getSource().getId()
-										|| arcs.get(k).getSource().getId() == arc1.getDestination().getId())
-										&& (arcs.get(k).getDestination().getId() == arc2.getDestination().getId()
-										|| arcs.get(k).getDestination().getId() == arc2.getSource().getId())) {
-									count++;
+					if(arc1.getDestination().getId() != arc1.getSource().getId()) {
+						for(int j=0; j<arcs.size(); j++) {
+							if((arcs.get(j).getSource().getId() == arc1.getDestination().getId()
+									|| arcs.get(j).getDestination().getId() == arc1.getDestination().getId())
+									&& arcs.get(j).getDestination().getId() != arc1.getSource().getId()
+									&& i!=j) {
+								Arc arc2 = new Arc();
+								arc2 = arcs.get(j);
+								if(arc2.getDestination().getId() != arc2.getSource().getId()) {
+									for(int k=0; k<arcs.size(); k++) {
+										if((arcs.get(k).getSource().getId() == arc1.getSource().getId()
+												|| arcs.get(k).getSource().getId() == arc1.getDestination().getId())
+												&& (arcs.get(k).getDestination().getId() == arc2.getDestination().getId()
+												|| arcs.get(k).getDestination().getId() == arc2.getSource().getId())
+												&& (arcs.get(k).getSource().getId() != arcs.get(k).getDestination().getId())) {
+											count++;
+										}
+									}
 								}
 							}
 						}
@@ -280,8 +285,8 @@ public class Graphe {
 		else s = s + "Ce graphe n'est pas Symétrique\n";
 		if (this.isAntisymmetric(orientation)) s = s + "Ce graphe est Antisymétrique\n";
 		else s = s + "Ce graphe n'est pas Antisymétrique\n";
-		if (this.isTransitive(orientation)) s = s + "Ce graphe est Transitive\n";
-		else s = s + "Ce graphe n'est pas Transitive\n";
+		if (this.isTransitive(orientation)) s = s + "Ce graphe est Transitif\n";
+		else s = s + "Ce graphe n'est pas Transitif\n";
 		return s;
 	}
 }
