@@ -42,7 +42,7 @@ public class Graphe {
 		if(orientation) {
 			return false;
 		} else {
-			if(this.isConnexe(orientation)) {
+			if(this.isFortementConnexe(orientation)) {
 				for(int i=0; i<this.getArcs().size(); i++) {
 					if(this.getArcs().get(i).getSource() == this.getArcs().get(i).getDestination()) {
 						return false;
@@ -55,11 +55,41 @@ public class Graphe {
 		}
 	}
 
-	public boolean isConnexe(boolean orientation) {
-		LinkedList<Integer> sources = new LinkedList<Integer>();
-		LinkedList<Integer> destinations = new LinkedList<Integer>();
+	public boolean isConnexe() {
 		LinkedList<Integer> nds = new LinkedList<Integer>();
 		LinkedList<Integer> n = new LinkedList<Integer>();
+		
+		for(int i=0; i<this.getArcs().size(); i++) {
+			if(i == 0) {
+				nds.add(this.getArcs().get(0).getSource().getId());
+				nds.add(this.getArcs().get(0).getDestination().getId());
+			}
+			if(!nds.contains(this.getArcs().get(i).getSource().getId())
+					&& (nds.contains(this.getArcs().get(i).getSource().getId()) || nds.contains(this.getArcs().get(i).getDestination().getId()))) {
+				
+				nds.add(this.getArcs().get(i).getSource().getId());
+			}
+			if(!nds.contains(this.getArcs().get(i).getDestination().getId())
+					&& (nds.contains(this.getArcs().get(i).getSource().getId()) || nds.contains(this.getArcs().get(i).getDestination().getId()))) {
+				
+				nds.add(this.getArcs().get(i).getDestination().getId());
+			}
+		}
+
+		// Supprimer les doublants
+		for(int i=0; i<nds.size(); i++){
+			if(!n.contains(nds.get(i))) {
+				n.add(nds.get(i));
+			}
+		}
+
+		if(n.size() == this.getNoeuds().size())	return true;
+		else return false;
+	}
+	
+	public boolean isFortementConnexe(boolean orientation) {
+		LinkedList<Integer> sources = new LinkedList<Integer>();
+		LinkedList<Integer> destinations = new LinkedList<Integer>();
 		if(orientation) {
 			for(int i=0; i<this.getArcs().size(); i++) {
 				if(!sources.contains(this.getArcs().get(i).getSource().getId())
@@ -73,38 +103,13 @@ public class Graphe {
 					destinations.add(this.getArcs().get(i).getDestination().getId());
 				}
 			}
-		} else {
-			for(int i=0; i<this.getArcs().size(); i++) {
-				if(i == 0) {
-					nds.add(this.getArcs().get(0).getSource().getId());
-					nds.add(this.getArcs().get(0).getDestination().getId());
-				}
-				if(!nds.contains(this.getArcs().get(i).getSource().getId())
-						&& (nds.contains(this.getArcs().get(i).getSource().getId()) || nds.contains(this.getArcs().get(i).getDestination().getId()))) {
-					
-					nds.add(this.getArcs().get(i).getSource().getId());
-				}
-				if(!nds.contains(this.getArcs().get(i).getDestination().getId())
-						&& (nds.contains(this.getArcs().get(i).getSource().getId()) || nds.contains(this.getArcs().get(i).getDestination().getId()))) {
-					
-					nds.add(this.getArcs().get(i).getDestination().getId());
-				}
-			}
-		}
-
-		// Supprimer les doublants
-		for(int i=0; i<nds.size(); i++){
-			if(!n.contains(nds.get(i))) {
-				n.add(nds.get(i));
-			}
 		}
 
 		// Trier les deux listes: sources/destinations
 		Collections.sort(sources);
 		Collections.sort(destinations);
 
-		if(n.size() == this.getNoeuds().size())	return true;
-		else if(sources.equals(destinations) && !sources.isEmpty() && !destinations.isEmpty()) return true;
+		if(sources.equals(destinations) && !sources.isEmpty() && !destinations.isEmpty()) return true;
 		else return false;
 	}
 
@@ -125,13 +130,13 @@ public class Graphe {
 		int countSource = 0;
 		int countDestination = 0;
 		if (!orientation) {
-			if (this.isConnexe(orientation)) {
+			if (this.isConnexe()) {
 				return true;
 			} else {
 				return false;
 			}
 		} else {
-			if (this.isConnexe(orientation)) {
+			if (this.isConnexe()) {
 				for(int i=0; i<this.getArcs().size(); i++) {
 					LinkedList<Integer> source = new LinkedList<Integer>();
 					LinkedList<Integer> destination = new LinkedList<Integer>();
@@ -168,7 +173,7 @@ public class Graphe {
 		if (!orientation) {
 			return false;
 		} else {
-			if (this.isConnexe(orientation)) {
+			if (this.isConnexe()) {
 				for(int i=0; i<this.getArcs().size(); i++) {
 					LinkedList<Integer> source = new LinkedList<Integer>();
 					LinkedList<Integer> destination = new LinkedList<Integer>();
@@ -199,7 +204,7 @@ public class Graphe {
 	
 	public boolean isTransitive(boolean orientation) {
 		if(!orientation) {
-			if(this.isConnexe(orientation)) {
+			if(this.isConnexe()) {
 				LinkedList<Arc> arcs = new LinkedList<Arc>();
 				arcs = this.getArcs();
 				int count = 0;
@@ -230,7 +235,7 @@ public class Graphe {
 				return false;
 			}
 		} else {
-			if(this.isConnexe(orientation)) {
+			if(this.isConnexe()) {
 				LinkedList<Arc> arcs = new LinkedList<Arc>();
 				arcs = this.getArcs();
 				int count = 0;
@@ -263,8 +268,12 @@ public class Graphe {
 
 	public String verifyProperties(boolean orientation) {
 		String s = "";
-		if (this.isConnexe(orientation)) s = s + "Ce graphe est Connexe\n";
+		if (this.isConnexe()) s = s + "Ce graphe est Connexe\n";
 		else s = s + "Ce graphe n'est pas Connexe\n";
+		if(orientation) {
+			if (this.isFortementConnexe(orientation)) s = s + "Ce graphe est Fortement Connexe\n";
+			else s = s + "Ce graphe n'est pas Fortement Connexe\n";	
+		}
 		if (this.isReflexive(orientation)) s = s + "Ce graphe est Reflexif\n";
 		else s = s + "Ce graphe n'est pas Reflexif\n";
 		if (this.isSymmetric(orientation)) s = s + "Ce graphe est Symétrique\n";

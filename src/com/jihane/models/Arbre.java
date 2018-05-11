@@ -3,6 +3,10 @@ package com.jihane.models;
 
 import java.util.*;
 
+import org.jgraph.graph.DefaultEdge;
+import org.jgrapht.alg.CycleDetector;
+import org.jgrapht.graph.DefaultDirectedGraph;
+
 
 public class Arbre {
     

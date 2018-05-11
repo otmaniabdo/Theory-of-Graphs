@@ -241,6 +241,8 @@ public class Main extends JFrame{
 		logField.setBackground(new Color(255, 255, 204));
 		logField.setForeground(new Color(0, 0, 0));
 		logField.setBounds(444, 131, 631, 71);
+		Font font = new Font("LucidaSans", Font.PLAIN, 16);
+		logField.setFont(font);
 		frame.getContentPane().add(logField);
 		panel_1.setLayout(null);
 		
@@ -412,10 +414,7 @@ public class Main extends JFrame{
 						Noeud destination = noeuds.get(Integer.parseInt(cbDjikstraFin.getSelectedItem().toString())-1);
 						LinkedList<Noeud> chemin = ad.dessinerChemin(source, destination);
 						
-						Font font = new Font("LucidaSans", Font.PLAIN, 14);
-						AttributedString text= new AttributedString(ad.plusCourtChemin(source, destination));
-						text.addAttribute(TextAttribute.FONT, font);
-						logField.setText(text.toString());
+						logField.setText(ad.plusCourtChemin(source, destination));
 
 						panel_4.removeAll();
 						panel_4.add(ad.DrawGraph(graphe, chemin,choice.getSelectedItem(), chckbxOrient.isSelected()));
