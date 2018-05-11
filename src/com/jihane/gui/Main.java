@@ -431,6 +431,18 @@ public class Main extends JFrame{
 					if(cbDjikstraFin.getSelectedItem() != null) {
 						Noeud source = noeuds.get(Integer.parseInt(cbDjikstraDebut.getSelectedItem().toString())-1);
 						Noeud destination = noeuds.get(Integer.parseInt(cbDjikstraFin.getSelectedItem().toString())-1);
+						Noeud tmp = null;
+						for(int i=0; i<graphe.getArcs().size(); i++) {
+							if(graphe.getArcs().get(i).getSource().getId() == source.getId()) {
+								break;
+							}
+							if(graphe.getArcs().get(i).getDestination().getId() == source.getId()) {
+								tmp = source;
+								source = destination;
+								destination = tmp;
+								break;
+							}
+						}
 						LinkedList<Noeud> chemin = ad.dessinerChemin(source, destination);
 						
 						logField.setText(ad.plusCourtChemin(source, destination));
