@@ -3,6 +3,7 @@ package com.jihane.gui;
 import java.util.LinkedList;
 
 import com.jihane.models.Arc;
+import com.jihane.models.Noeud;
 
 import edu.uci.ics.jung.graph.Graph;
 import edu.uci.ics.jung.graph.SparseGraph;
@@ -20,6 +21,27 @@ public class DrawingGraph {
 				 g.addVertex(i);
 			 }
 		 }
+		 if(orientation) {
+			 for(Arc arc : arcs) {
+				 g.addEdge("Edge "+arc.getId() + "- " + arc.getPoids(),arc.getSource().getId() ,arc.getDestination().getId(),EdgeType.DIRECTED);
+
+			 }			 
+		 }else {
+			 for(Arc arc : arcs) {
+				 g.addEdge("Edge "+arc.getId() + "- " + arc.getPoids(),arc.getSource().getId() ,arc.getDestination().getId());
+
+			 } 
+		 }
+
+	}
+	public DrawingGraph(LinkedList<Arc> arcs,LinkedList<Noeud> Noeuds,boolean orientation) {
+		 g = new SparseGraph<Integer, String>();
+		 
+		 for(Noeud N : Noeuds) {
+			 g.addVertex(N.id);
+		 }
+				 
+		 
 		 if(orientation) {
 			 for(Arc arc : arcs) {
 				 g.addEdge("Edge "+arc.getId() + "- " + arc.getPoids(),arc.getSource().getId() ,arc.getDestination().getId(),EdgeType.DIRECTED);
