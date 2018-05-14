@@ -71,6 +71,8 @@ public class Main extends JFrame{
 	static LinkedList<Arc> arcs = new LinkedList<Arc>();
 	static Graphe graphe;
 	static boolean orientation;
+	private JTextField listI;
+	private JTextField listS;
 
 	/**
 	 * Launch the application.
@@ -345,16 +347,100 @@ public class Main extends JFrame{
 		panel_8.setBackground(new Color(85, 55, 118));
 		panel_8.setBounds(10, 506, 420, 50);
 		panel.add(panel_8);
-		
+		Arbre arbre = new Arbre(arcs,noeuds);
+		Prufer p = new Prufer();
 		buttonPrufer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Arbre arbre = new Arbre(arcs,noeuds);
-				logField.setText("codage : "+Prufer.codage(arbre));
+				logField.setText("codage : "+p.codage(arbre));
 			}
 		});
 		buttonPrufer.setEnabled(false);
 		buttonPrufer.setBounds(128, 13, 145, 25);
 		panel_8.add(buttonPrufer);
+		
+		JPanel panel_9 = new JPanel();
+		panel_9.setLayout(null);
+		panel_9.setBackground(new Color(85, 55, 118));
+		panel_9.setBounds(10, 568, 420, 132);
+		panel.add(panel_9);
+		
+		JButton button = new JButton("Decodage de Prufer");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String S = listS.getText();
+				String I = listI.getText();
+
+		        panel_4.removeAll();
+
+				DrawingGraph grph = p.decodage(I, S, orientation);
+				Layout<Integer, String> layout;
+				if(choice.getSelectedItem().equals("FRLayout")) {
+					layout = new FRLayout<>(grph.g);
+				}else if(choice.getSelectedItem().equals("CircleLayout")) {
+					layout = new CircleLayout<>(grph.g);
+				}else if(choice.getSelectedItem().equals("SpringLayout")){
+					layout = new SpringLayout<>(grph.g);
+				}else{
+					layout = new SpringLayout2<>(grph.g);
+				}
+
+		        layout.setSize(new Dimension(480, 480));
+				BasicVisualizationServer<Integer,String> vv = new BasicVisualizationServer<Integer,String>(layout);
+		        vv.setPreferredSize(new Dimension(511, 511));       
+		        // Setup up a new vertex to paint transformer...
+		        Transformer<Integer,Paint> vertexPaint = new Transformer<Integer,Paint>() {
+		            @Override
+					public Paint transform(Integer i) {
+		            	 return Color.RED;
+					}
+		        };  
+		        // Set up a new stroke Transformer for the edges
+		        float dash[] = {10.0f};
+		        final Stroke edgeStroke = new BasicStroke(1.0f, BasicStroke.CAP_BUTT,
+		             BasicStroke.JOIN_MITER, 10.0f, dash, 0.0f);
+		        Transformer<String, Stroke> edgeStrokeTransformer = new Transformer<String, Stroke>() {
+		            @Override
+					public Stroke transform(String s) {
+		                return edgeStroke;
+		            }
+		        };
+		        
+		        vv.getRenderContext().setVertexFillPaintTransformer(vertexPaint);
+		        vv.getRenderContext().setEdgeStrokeTransformer(edgeStrokeTransformer);
+		        vv.getRenderContext().setVertexLabelTransformer(new ToStringLabeller());
+		        vv.getRenderContext().setEdgeLabelTransformer(new ToStringLabeller());
+		        vv.getRenderer().getVertexLabelRenderer().setPosition(Position.CNTR); 
+		        panel_4.add(vv);
+				setVisible(false);
+				btnDjikstra.setEnabled(true);
+				buttonKruskal.setEnabled(true);
+				frame.setVisible(true);
+			}
+		});
+		button.setBounds(128, 13, 145, 25);
+		panel_9.add(button);
+		
+		listI = new JTextField();
+		listI.setBounds(60, 49, 334, 20);
+		panel_9.add(listI);
+		listI.setColumns(10);
+		
+		JLabel lblS = new JLabel("I : ");
+		lblS.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblS.setForeground(Color.WHITE);
+		lblS.setBounds(20, 52, 46, 14);
+		panel_9.add(lblS);
+		
+		listS = new JTextField();
+		listS.setColumns(10);
+		listS.setBounds(60, 80, 334, 20);
+		panel_9.add(listS);
+		
+		JLabel lblI = new JLabel("S : ");
+		lblI.setForeground(Color.WHITE);
+		lblI.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblI.setBounds(20, 82, 46, 14);
+		panel_9.add(lblI);
 		btnColoriage.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
