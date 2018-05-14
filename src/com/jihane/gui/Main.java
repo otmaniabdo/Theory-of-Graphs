@@ -431,24 +431,25 @@ public class Main extends JFrame{
 					if(cbDjikstraFin.getSelectedItem() != null) {
 						Noeud source = noeuds.get(Integer.parseInt(cbDjikstraDebut.getSelectedItem().toString())-1);
 						Noeud destination = noeuds.get(Integer.parseInt(cbDjikstraFin.getSelectedItem().toString())-1);
-						Noeud tmp = null;
-						for(int i=0; i<graphe.getArcs().size(); i++) {
-							if(graphe.getArcs().get(i).getSource().getId() == source.getId()) {
-								break;
-							}
-							if(graphe.getArcs().get(i).getDestination().getId() == source.getId()) {
-								tmp = source;
-								source = destination;
-								destination = tmp;
-								break;
-							}
-						}
-						LinkedList<Noeud> chemin = ad.dessinerChemin(source, destination);
-						
-						logField.setText(ad.plusCourtChemin(source, destination));
 
-						panel_4.removeAll();
-						panel_4.add(ad.DrawGraph(graphe, chemin,choice.getSelectedItem(), chckbxOrient.isSelected()));
+
+						LinkedList<Noeud> chemin_1 = ad.dessinerChemin(source, destination);
+						int som_chemin_1 = ad.getPlusCourteDistance(destination);
+
+						LinkedList<Noeud> chemin_2 = ad.dessinerChemin(destination, source);
+						int som_chemin_2 = ad.getPlusCourteDistance(source);
+
+						if(som_chemin_1 < som_chemin_2) {
+							logField.setText(ad.plusCourtChemin(source, destination));
+
+							panel_4.removeAll();
+							panel_4.add(ad.DrawGraph(graphe, chemin_1, choice.getSelectedItem(), chckbxOrient.isSelected()));
+						} else {
+							logField.setText(ad.plusCourtChemin(destination, source));
+
+							panel_4.removeAll();
+							panel_4.add(ad.DrawGraph(graphe, chemin_2, choice.getSelectedItem(), chckbxOrient.isSelected()));
+						}
 					}else {
 						JOptionPane.showMessageDialog(null, "Vous devez saisir le noeud destination");
 					}

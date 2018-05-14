@@ -117,7 +117,7 @@ public class AlgorithmeDijkstra {
         return noeudsInclus.contains(noeud);
     }
     
-    private int getPlusCourteDistance(Noeud destination) {
+    public int getPlusCourteDistance(Noeud destination) {
         Integer d = distance.get(destination);
         if (d == null) {
             return Integer.MAX_VALUE;
