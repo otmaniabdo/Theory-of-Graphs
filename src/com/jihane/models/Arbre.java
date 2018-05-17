@@ -4,8 +4,12 @@ package com.jihane.models;
 import java.util.*;
 
 import org.jgraph.graph.DefaultEdge;
+import org.jgrapht.Graph;
 import org.jgrapht.alg.CycleDetector;
 import org.jgrapht.graph.DefaultDirectedGraph;
+import org.jgrapht.graph.SimpleGraph;
+
+import edu.uci.ics.jung.graph.UndirectedGraph;
 
 
 public class Arbre {
@@ -13,7 +17,7 @@ public class Arbre {
     public LinkedList<Arc>  arcs = new LinkedList<>();
     public LinkedList<ArbreNoeud> noeuds = new LinkedList<>();
     public boolean isArbre;
-    
+    public LinkedList<Integer> adj[];
    
     
     public Arbre(LinkedList<Arc> arcs, LinkedList<Noeud> noeuds) {
@@ -66,21 +70,59 @@ public class Arbre {
         
     public boolean isCyclic(){
             
-    	DefaultDirectedGraph<String, DefaultEdge> graphNoCycle = new DefaultDirectedGraph<String, DefaultEdge>(DefaultEdge.class);
-    	for(Noeud n : noeuds) {
-    		graphNoCycle.addVertex(Integer.toString(n.id));
-    	}
-    	for(Arc arc : arcs) {
-    		graphNoCycle.addEdge(Integer.toString(arc.getSource().id), Integer.toString(arc.getDestination().id));
-    	}
-    	CycleDetector<String, DefaultEdge> cycleDetector = new CycleDetector<String, DefaultEdge>(graphNoCycle);
-    	Set<String> cycleVertices = cycleDetector.findCycles();
-    	if(cycleVertices.isEmpty()) {
-    		return false;
-    	}
-    	return true;
+    	 adj= new LinkedList[noeuds.size()+1];
+    	 
+    	 for(Noeud N : noeuds)
+             adj[N.id] = new LinkedList();
+    	 
+    	 for(Arc arc : arcs) {
+    	        adj[arc.getSource().id].add(arc.getDestination().id);
+    	        adj[arc.getDestination().id].add(arc.getSource().id);
+    	 }
+    	 
+    	 Boolean visited[] = new Boolean[noeuds.size()+1];
+         for (int i = 1; i < noeuds.size()+1; i++) {
+             visited[i] = false;
+         }
+  
+         // Call the recursive helper function to detect cycle in
+         // different DFS trees
+         for (int u = 1; u < noeuds.size(); u++)
+             if (!visited[u]) // Don't recur for u if already visited
+                 if (isCyclicUtil(u, visited, -1))
+                     return true;
+  
+         return false;
+    	 
     }
-            
+    
+    Boolean isCyclicUtil(int v, Boolean visited[], int parent)
+    {
+        // Mark the current node as visited
+        visited[v] = true;
+        Integer i;
+ 
+        // Recur for all the vertices adjacent to this vertex
+        Iterator<Integer> it = adj[v].iterator();
+        while (it.hasNext())
+        {
+            i = it.next();
+ 
+            // If an adjacent is not visited, then recur for that
+            // adjacent
+            if (!visited[i])
+            {
+                if (isCyclicUtil(i, visited, v))
+                    return true;
+            }
+ 
+            // If an adjacent is visited and not parent of current
+            // vertex, then there is a cycle.
+            else if (i != parent)
+                return true;
+        }
+        return false;
+    }       
 	public boolean isArbre(){
 		
         if(!this.isCyclic() && this.isConnexe(false))
