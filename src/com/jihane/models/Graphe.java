@@ -1,5 +1,6 @@
 package com.jihane.models;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 
@@ -281,10 +282,10 @@ public class Graphe {
 		}
 		if (this.isReflexive(orientation)) s = s + "Ce graphe est Reflexif\n";
 		else s = s + "Ce graphe n'est pas Reflexif\n";
-		if (this.isSymmetric(orientation)) s = s + "Ce graphe est Symétrique\n";
-		else s = s + "Ce graphe n'est pas Symétrique\n";
-		if (this.isAntisymmetric(orientation)) s = s + "Ce graphe est Antisymétrique\n";
-		else s = s + "Ce graphe n'est pas Antisymétrique\n";
+		if (this.isSymmetric(orientation)) s = s + "Ce graphe est SymÃ©trique\n";
+		else s = s + "Ce graphe n'est pas SymÃ©trique\n";
+		if (this.isAntisymmetric(orientation)) s = s + "Ce graphe est AntisymÃ©trique\n";
+		else s = s + "Ce graphe n'est pas AntisymÃ©trique\n";
 		if (this.isTransitive(orientation)) s = s + "Ce graphe est Transitif\n";
 		else s = s + "Ce graphe n'est pas Transitif\n";
 		return s;

@@ -10,15 +10,15 @@
 	<classpathentry kind="lib" path="jung-graph-impl-2.0.jar"/>
 	<classpathentry kind="lib" path="jung-visualization-2.0.jar"/>
 	<classpathentry kind="lib" path="miglayout15-swing.jar"/>
-	<classpathentry kind="lib" path="C:/Users/abdo otmani/Downloads/Compressed/lib/antlr4-runtime-4.6.jar"/>
-	<classpathentry kind="lib" path="C:/Users/abdo otmani/Downloads/Compressed/lib/commons-lang3-3.5.jar"/>
-	<classpathentry kind="lib" path="C:/Users/abdo otmani/Downloads/Compressed/lib/jgraph-5.13.0.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/abdo otmani/Downloads/Compressed/lib/jgrapht-core-1.1.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/abdo otmani/Downloads/Compressed/lib/jgrapht-demo-1.1.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/abdo otmani/Downloads/Compressed/lib/jgrapht-ext-1.1.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/abdo otmani/Downloads/Compressed/lib/jgrapht-ext-1.1.0-uber.jar"/>
-	<classpathentry kind="lib" path="C:/Users/abdo otmani/Downloads/Compressed/lib/jgrapht-io-1.1.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/abdo otmani/Downloads/Compressed/lib/jgrapht-io-1.1.0-uber.jar"/>
-	<classpathentry kind="lib" path="C:/Users/abdo otmani/Downloads/Compressed/lib/jgraphx-2.0.0.1.jar"/>
+	<classpathentry kind="lib" path="E:/Freelance/Theory-of-Graphs/antlr4-runtime-4.6.jar"/>
+	<classpathentry kind="lib" path="E:/Freelance/Theory-of-Graphs/commons-lang3-3.5.jar"/>
+	<classpathentry kind="lib" path="E:/Freelance/Theory-of-Graphs/jgraph-5.13.0.0.jar"/>
+	<classpathentry kind="lib" path="E:/Freelance/Theory-of-Graphs/jgrapht-core-1.1.0.jar"/>
+	<classpathentry kind="lib" path="E:/Freelance/Theory-of-Graphs/jgrapht-demo-1.1.0.jar"/>
+	<classpathentry kind="lib" path="E:/Freelance/Theory-of-Graphs/jgrapht-ext-1.1.0.jar"/>
+	<classpathentry kind="lib" path="E:/Freelance/Theory-of-Graphs/jgrapht-ext-1.1.0-uber.jar"/>
+	<classpathentry kind="lib" path="E:/Freelance/Theory-of-Graphs/jgrapht-io-1.1.0.jar"/>
+	<classpathentry kind="lib" path="E:/Freelance/Theory-of-Graphs/jgrapht-io-1.1.0-uber.jar"/>
+	<classpathentry kind="lib" path="E:/Freelance/Theory-of-Graphs/jgraphx-2.0.0.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

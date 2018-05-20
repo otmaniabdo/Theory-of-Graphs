@@ -169,7 +169,6 @@ public class AlgorithmeDijkstra {
 		}else{
 			layout = new SpringLayout2<>(grph.getGraph());
 		}
-		
         layout.setSize(new Dimension(480, 480));
 		BasicVisualizationServer<Integer,String> vv = new BasicVisualizationServer<Integer,String>(layout);
         vv.setPreferredSize(new Dimension(511, 511));       
@@ -181,7 +180,7 @@ public class AlgorithmeDijkstra {
                     return Color.GREEN;
             	}
             	else {
-            		return Color.RED;
+            		return Color.WHITE;
             	}
             }
         };  

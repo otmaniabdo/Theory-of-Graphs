@@ -532,14 +532,14 @@ public class Main extends JFrame{
 								panel_4.removeAll();
 								panel_4.add(ad.DrawGraph(graphe, chemin_1, choice.getSelectedItem(), chckbxOrient.isSelected()));
 							
-//								new DjikstraUI(ad, graphe, chemin_1, choice.getSelectedItem(), chckbxOrient.isSelected()).setVisible(true);
+								new DjikstraUI(ad, graphe, chemin_1, choice.getSelectedItem(), chckbxOrient.isSelected()).setVisible(true);
 							} else {
 								logField.setText(ad.plusCourtChemin(destination, source));
 
 								panel_4.removeAll();
 								panel_4.add(ad.DrawGraph(graphe, chemin_2, choice.getSelectedItem(), chckbxOrient.isSelected()));
 								
-//								new DjikstraUI(ad, graphe, chemin_2, choice.getSelectedItem(), chckbxOrient.isSelected()).setVisible(true);
+								new DjikstraUI(ad, graphe, chemin_2, choice.getSelectedItem(), chckbxOrient.isSelected()).setVisible(true);
 							}
 						}else {
 							if(som_chemin_1 < som_chemin_2) {
@@ -548,14 +548,14 @@ public class Main extends JFrame{
 								panel_4.removeAll();
 								panel_4.add(ad.DrawGraph(graphe, chemin_1, choice.getSelectedItem(), chckbxOrient.isSelected()));
 							
-//								new DjikstraUI(ad, graphe, chemin_1, choice.getSelectedItem(), chckbxOrient.isSelected()).setVisible(true);
+								new DjikstraUI(ad, graphe, chemin_1, choice.getSelectedItem(), chckbxOrient.isSelected()).setVisible(true);
 							} else {
 								logField.setText(ad.plusCourtChemin(destination, source));
 	
 								panel_4.removeAll();
 								panel_4.add(ad.DrawGraph(graphe, chemin_2, choice.getSelectedItem(), chckbxOrient.isSelected()));
 								
-//								new DjikstraUI(ad, graphe, chemin_2, choice.getSelectedItem(), chckbxOrient.isSelected()).setVisible(true);
+								new DjikstraUI(ad, graphe, chemin_2, choice.getSelectedItem(), chckbxOrient.isSelected()).setVisible(true);
 							}
 						}
 					} else {
