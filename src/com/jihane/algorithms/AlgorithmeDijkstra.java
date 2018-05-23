@@ -36,31 +36,33 @@ public class AlgorithmeDijkstra {
     private Map<Noeud, Integer> distance;
     private boolean orientation;
    
+    // Constructeur pour la classe Algorithme de Djikstra
 	public AlgorithmeDijkstra(Graphe graphe, boolean orientation) {
 		super();
 		this.graphe = graphe;
 		this.orientation = orientation;
 	}
 
+	// Getter pour l'attribut graphe
     public Graphe getGraphe() {
 		return graphe;
 	}
 
-
+	// Setter pour l'attribut graphe
 	public void setGraphe(Graphe graphe) {
 		this.graphe = graphe;
 	}
  
 	// Elle retourne la distance minimale de tous les voisins de Noeud
     private void trouverDistanceMinimal(Noeud noeud) {
-        LinkedList<Noeud> adjacentNodes = getVoisions(noeud);
-        for (Noeud destination : adjacentNodes) {
-            if (getPlusCourteDistance(destination) > getPlusCourteDistance(noeud)
-                    + getDistance(noeud, destination)) {
-                distance.put(destination, getPlusCourteDistance(noeud)
-                        + getDistance(noeud, destination));
-                predecesseurs.put(destination, noeud);
-                noeudsExclus.add(destination);
+        LinkedList<Noeud> voisions = getVoisions(noeud);
+        for (Noeud pivot : voisions) {
+            if (getPlusCourteDistance(pivot) > getPlusCourteDistance(noeud)
+                    + getDistance(noeud, pivot)) {
+                distance.put(pivot, getPlusCourteDistance(noeud)
+                        + getDistance(noeud, pivot));
+                predecesseurs.put(pivot, noeud);
+                noeudsExclus.add(pivot);
             }
         }
 
@@ -81,6 +83,7 @@ public class AlgorithmeDijkstra {
     	LinkedList<Noeud> voisions = new LinkedList<Noeud>();
     	LinkedList<Arc> arcs = new LinkedList<Arc>();
     	int i = 1;
+    	// Dupliquer les arcs en cas de graphe non orienté
     	if(!orientation) {
     		for(Arc arc : this.getGraphe().getArcs()) {
     			arcs.add(arc);
@@ -99,6 +102,7 @@ public class AlgorithmeDijkstra {
         return voisions;
     }
     
+    // Elle permet de retourner le poid minimal dans une liste de noeuds passée en paramétre
     private Noeud getMinimum(Set<Noeud> noeuds) {
     	Noeud minimum = null;
         for (Noeud noeud : noeuds) {
@@ -113,10 +117,12 @@ public class AlgorithmeDijkstra {
         return minimum;
     }
 
+    // Retourne si le Noeud "noeud" est dans la liste noeudsInclus
     private boolean estInclu(Noeud noeud) {
         return noeudsInclus.contains(noeud);
     }
     
+    // Avoir la distance minimale jusqu'à le noeud destination donné en paramètre
     public int getPlusCourteDistance(Noeud destination) {
         Integer d = distance.get(destination);
         if (d == null) {
@@ -126,8 +132,9 @@ public class AlgorithmeDijkstra {
         }
     }
 
+    // Elle permet de retourner une liste des noeuds, et c'est le plus court chemin du noeud source vers le noeud destination
     public LinkedList<Noeud> dessinerChemin(Noeud source, Noeud destination) {
-        LinkedList<Noeud> chemin = new LinkedList<Noeud>();
+        LinkedList<Noeud> S = new LinkedList<Noeud>();
         noeudsInclus = new HashSet<Noeud>();
         noeudsExclus = new HashSet<Noeud>();
         distance = new HashMap<Noeud, Integer>();
@@ -144,19 +151,20 @@ public class AlgorithmeDijkstra {
         if (predecesseurs.get(step) == null) {
             return null;
         }
-        chemin.add(step);
+        S.add(step);
         while (predecesseurs.get(step) != null) {
             step = predecesseurs.get(step);
-            chemin.add(step);
+            S.add(step);
         }
-        Collections.reverse(chemin);
-        return chemin;
+        Collections.reverse(S);
+        return S;
     }
     
     public String plusCourtChemin(Noeud source, Noeud destination) {
     	return this.dessinerChemin(source, destination).toString();
     }
     
+    // Afficher le plus court chemin du graphe
     public BasicVisualizationServer<Integer, String> DrawGraph(Graphe graphe, LinkedList<Noeud> chemin,String GrapheLayout,boolean orientation) {
 		DrawingGraph grph = new DrawingGraph(graphe.getArcs(),graphe.getNoeuds().size(),orientation);
 		Layout<Integer, String> layout;
@@ -171,8 +179,8 @@ public class AlgorithmeDijkstra {
 		}
         layout.setSize(new Dimension(480, 480));
 		BasicVisualizationServer<Integer,String> vv = new BasicVisualizationServer<Integer,String>(layout);
-        vv.setPreferredSize(new Dimension(511, 511));       
-        // Setup up a new vertex to paint transformer...
+        vv.setPreferredSize(new Dimension(511, 511));  
+        // définir les propriétés graphiques des noeuds lors de l'affichage.
         Transformer<Integer,Paint> vertexPaint = new Transformer<Integer,Paint>() {
             @Override
 			public Paint transform(Integer i) {
@@ -183,8 +191,8 @@ public class AlgorithmeDijkstra {
             		return Color.WHITE;
             	}
             }
-        };  
-        // Set up a new stroke Transformer for the edges
+        };
+        // définir les propriétés graphiques des arcs lors de l'affichage.
         float dash[] = {10.0f};
         final Stroke edgeStroke = new BasicStroke(1.0f, BasicStroke.CAP_BUTT,
              BasicStroke.JOIN_MITER, 10.0f, dash, 0.0f);
