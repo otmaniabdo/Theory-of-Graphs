@@ -101,25 +101,29 @@ public class Arbre {
         // Mark the current node as visited
         visited[v] = true;
         Integer i;
- 
+
         // Recur for all the vertices adjacent to this vertex
         Iterator<Integer> it = adj[v].iterator();
         while (it.hasNext())
         {
             i = it.next();
- 
+
             // If an adjacent is not visited, then recur for that
             // adjacent
             if (!visited[i])
             {
-                if (isCyclicUtil(i, visited, v))
+                if (isCyclicUtil(i, visited, v)) {
                     return true;
+                }
+
             }
  
             // If an adjacent is visited and not parent of current
             // vertex, then there is a cycle.
-            else if (i != parent)
+            else if (i != parent) {
                 return true;
+            }
+
         }
         return false;
     }       

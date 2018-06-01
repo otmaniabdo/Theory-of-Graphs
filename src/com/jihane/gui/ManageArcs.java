@@ -29,11 +29,14 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Ellipse2D;
 import java.awt.event.ActionEvent;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Paint;
+import java.awt.Shape;
 import java.awt.Stroke;
 
 public class ManageArcs extends JFrame {
@@ -83,11 +86,11 @@ public class ManageArcs extends JFrame {
 			        Transformer<Integer,Paint> vertexPaint = new Transformer<Integer,Paint>() {
 			            @Override
 						public Paint transform(Integer i) {
-			                return Color.RED;
+			                return Color.white;
 			            }
 			        };  
 			        // Set up a new stroke Transformer for the edges
-			        float dash[] = {10.0f};
+			        float dash[] = {0.1f};
 			        final Stroke edgeStroke = new BasicStroke(1.0f, BasicStroke.CAP_BUTT,
 			             BasicStroke.JOIN_MITER, 10.0f, dash, 0.0f);
 			        Transformer<String, Stroke> edgeStrokeTransformer = new Transformer<String, Stroke>() {
@@ -96,8 +99,16 @@ public class ManageArcs extends JFrame {
 			                return edgeStroke;
 			            }
 			        };
+			        Transformer<Integer,Shape> vertexSize = new Transformer<Integer,Shape>(){
+			            public Shape transform(Integer i){
+			                Ellipse2D circle = new Ellipse2D.Double(-15, -15, 20, 20);
+			                // in this case, the vertex is twice as large
+			                return AffineTransform.getScaleInstance(2, 2).createTransformedShape(circle);
+			            }
+			        };
 			        
 			        vv.getRenderContext().setVertexFillPaintTransformer(vertexPaint);
+			        vv.getRenderContext().setVertexShapeTransformer(vertexSize);
 			        vv.getRenderContext().setEdgeStrokeTransformer(edgeStrokeTransformer);
 			        vv.getRenderContext().setVertexLabelTransformer(new ToStringLabeller());
 			        vv.getRenderContext().setEdgeLabelTransformer(new ToStringLabeller());

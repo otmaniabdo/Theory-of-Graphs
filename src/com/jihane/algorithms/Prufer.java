@@ -52,11 +52,11 @@ public class Prufer {
 				for(Arc arc : arbre.arcs) {
 					
 					if(arc.getDestination().id == min && arc.active) {
-						System.out.println(arc.getSource().id+"->"+arc.getDestination().id);
+						//System.out.println(arc.getSource().id+"->"+arc.getDestination().id);
 						list.add(arc.getSource().id);
 						arc.active = false;
 					}else if(arc.getSource().id == min && arc.active){
-						System.out.println(arc.getSource().id+"->"+arc.getDestination().id);
+						//System.out.println(arc.getSource().id+"->"+arc.getDestination().id);
 						list.add(arc.getDestination().id);
 						arc.active = false;					
 					}
@@ -66,7 +66,6 @@ public class Prufer {
 						n.isVisited = true;
 						noeudstaille--;
 					}
-
 				}
 			}
 			return list.toString();
@@ -74,9 +73,8 @@ public class Prufer {
 		return "";
 	}
 	
-	public LinkedList<Integer> feuitte(LinkedList<Arc> arcs,LinkedList<ArbreNoeud> noeuds) {
+	public LinkedList<Integer> feuitte(LinkedList<Arc> arcs,LinkedList<ArbreNoeud> noeuds) { // codage 
 	    LinkedList<Integer> list = new LinkedList<Integer>();
-		boolean trouver = false;
 		for (ArbreNoeud n : noeuds) {
 			int taille = 0 ;
 			for(Arc c : arcs) {
@@ -106,30 +104,30 @@ public class Prufer {
 		
 		NoeudsList = ToInt(Noeuds);
 		NoeudsList.sort(null);
-		System.out.println(NoeudsList);
+		//System.out.println(NoeudsList);
 
 		codageList = ToInt(codage);
-		System.out.println(codageList);
+		//System.out.println(codageList);
 
 		for(int i : NoeudsList) {
 			noeuds.add(new Noeud(i,Integer.toString(i)));
 		}
-		System.out.println(NoeudsList.size());
+		//System.out.println(NoeudsList.size());
 		int i = 1; 
 		if(codageList.size() <=  NoeudsList.size()-2) {
 			while (NoeudsList.size() > 2 && !codageList.isEmpty()) {
 				int noeud = NoeudsList.getFirst();
-				if(!codageList.contains(noeud)) {
+				if(!codageList.contains(noeud)){
 					arcs.add(new Arc(i,1,new Noeud(codageList.getFirst(),Integer.toString(codageList.getFirst())),new Noeud(noeud,Integer.toString(noeud))));
 					i++;
 					NoeudsList.removeFirst();
 					codageList.removeFirst();
-					System.out.println(NoeudsList);
-					System.out.println(codageList);
+					//System.out.println(NoeudsList);
+					//System.out.println(codageList);
 				}else{
-					System.out.println("---- 1");
+					//System.out.println("---- 1");
 					for(int j=1;j<NoeudsList.size();j++) {
-						System.out.println("---- 2");
+						//System.out.println("---- 2");
 						if(!codageList.contains(NoeudsList.get(j))) {
 							System.out.println("---- 3");
 							int tmp = NoeudsList.getFirst();
@@ -154,7 +152,7 @@ public class Prufer {
 	}
 	
 	
-	public LinkedList<Integer> ToInt(String list){
+	public LinkedList<Integer> ToInt(String list){ // Partie decodage
 		LinkedList<Integer> listInt = new LinkedList<Integer>();
 		list = list.replace(" ", "");
 		list = list.replace("{","");
