@@ -530,41 +530,52 @@ public class Main extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				
-				AlgorithmeDijkstra ad = new AlgorithmeDijkstra(graphe, chckbxOrient.isSelected());
 				if(cbDjikstraDebut.getSelectedItem() != null) {
 					if(cbDjikstraFin.getSelectedItem() != null) {
 						Noeud source = noeuds.get(Integer.parseInt(cbDjikstraDebut.getSelectedItem().toString())-1);
 						Noeud destination = noeuds.get(Integer.parseInt(cbDjikstraFin.getSelectedItem().toString())-1);
 
+						if(chckbxOrient.isSelected() == false) {
+							AlgorithmeDijkstra ad = new AlgorithmeDijkstra(graphe, false);
+							System.out.println("NonOriente");
+							LinkedList<Noeud> chemin_1 = ad.dessinerChemin(source, destination);
+							int som_chemin_1 = ad.getPlusCourteDistance(destination);
 
-						LinkedList<Noeud> chemin_1 = ad.dessinerChemin(source, destination);
-						int som_chemin_1 = ad.getPlusCourteDistance(destination);
-
-						LinkedList<Noeud> chemin_2 = ad.dessinerChemin(destination, source);
-						int som_chemin_2 = ad.getPlusCourteDistance(source);
-						
-						if(som_chemin_1 < 0 && som_chemin_2 < 0) {
-							if(som_chemin_1 > som_chemin_2) {
-								logField.setText(ad.plusCourtChemin(source, destination));
-							
-								new DjikstraUI(ad, graphe, chemin_1, choice.getSelectedItem(), chckbxOrient.isSelected()).setVisible(true);
-							} else {
-								logField.setText(ad.plusCourtChemin(destination, source));
+							LinkedList<Noeud> chemin_2 = ad.dessinerChemin(destination, source);
+							int som_chemin_2 = ad.getPlusCourteDistance(source);
+							System.out.println("Som :" + som_chemin_1 + " ===> " + chemin_1);
+							System.out.println("Som :" + som_chemin_2 + " ===> " + chemin_2);
+							if(som_chemin_1 < 0 && som_chemin_2 < 0) {
+								if(som_chemin_1 > som_chemin_2) {
+									logField.setText(ad.plusCourtChemin(source, destination));
 								
-								new DjikstraUI(ad, graphe, chemin_2, choice.getSelectedItem(), chckbxOrient.isSelected()).setVisible(true);
-							}
-						}else {
-							if(som_chemin_1 < som_chemin_2) {
-								logField.setText(ad.plusCourtChemin(source, destination));
-	
-							
-								new DjikstraUI(ad, graphe, chemin_1, choice.getSelectedItem(), chckbxOrient.isSelected()).setVisible(true);
-							} else {
-								logField.setText(ad.plusCourtChemin(destination, source));
-	
+									new DjikstraUI(ad, graphe, chemin_1, choice.getSelectedItem(), chckbxOrient.isSelected()).setVisible(true);
+								} else {
+									logField.setText(ad.plusCourtChemin(destination, source));
+									
+									new DjikstraUI(ad, graphe, chemin_2, choice.getSelectedItem(), chckbxOrient.isSelected()).setVisible(true);
+								}
+							}else {
+								if(som_chemin_1 < som_chemin_2) {
+									logField.setText(ad.plusCourtChemin(source, destination));
+		
 								
-								new DjikstraUI(ad, graphe, chemin_2, choice.getSelectedItem(), chckbxOrient.isSelected()).setVisible(true);
+									new DjikstraUI(ad, graphe, chemin_1, choice.getSelectedItem(), chckbxOrient.isSelected()).setVisible(true);
+								} else {
+									logField.setText(ad.plusCourtChemin(destination, source));
+		
+									
+									new DjikstraUI(ad, graphe, chemin_2, choice.getSelectedItem(), chckbxOrient.isSelected()).setVisible(true);
+								}
 							}
+						} else {
+							AlgorithmeDijkstra ad = new AlgorithmeDijkstra(graphe, true);
+							System.out.println("Oriente");
+							logField.setText(ad.plusCourtChemin(source, destination));
+							LinkedList<Noeud> chemin = ad.dessinerChemin(source, destination);
+							System.out.println("======> " + chemin);
+							
+							new DjikstraUI(ad, graphe, chemin, choice.getSelectedItem(), true).setVisible(true);
 						}
 					} else {
 						JOptionPane.showMessageDialog(null, "Vous devez saisir le noeud destination");

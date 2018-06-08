@@ -169,7 +169,7 @@ public class AlgorithmeDijkstra {
     
     // Afficher le plus court chemin du graphe
     public BasicVisualizationServer<Integer, String> DrawGraph(Graphe graphe, LinkedList<Noeud> chemin,String GrapheLayout,boolean orientation) {
-		DrawingGraph grph = new DrawingGraph(graphe.getArcs(),graphe.getNoeuds(),orientation);
+		DrawingGraph grph = new DrawingGraph(graphe.getArcs(),chemin,orientation);
 		Layout<Integer, String> layout;
 		if(GrapheLayout.equals("FRLayout")) {
 			layout = new FRLayout<>(grph.getGraph());

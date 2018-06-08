@@ -37,39 +37,40 @@ public class DjikstraUI extends JFrame {
 		panel.setBackground(Color.WHITE);
 		panel.setToolTipText("");
 		contentPane.add(panel, BorderLayout.CENTER);
-		System.out.println(graphe.getNoeuds());
-		graphe.setNoeuds(null);
-		graphe.setNoeuds(chemin);
-		System.out.println(chemin);
-		System.out.println(graphe.getNoeuds());
-		System.out.println(graphe.getArcs());
+//		graphe.setNoeuds(null);
+//		graphe.setNoeuds(chemin);
 		LinkedList<Arc> arcs = new LinkedList<Arc>();
     	int k = 1;
-		for(int i=0; i<graphe.getArcs().size(); i++) {
-			int count = 0;
-			for(int j=0; j<graphe.getNoeuds().size(); j++) {
-				if((graphe.getArcs().get(i).getSource().getId() == graphe.getNoeuds().get(j).getId()
-						&& chemin.contains(graphe.getArcs().get(i).getDestination()))
-						|| (graphe.getArcs().get(i).getDestination().getId() == graphe.getNoeuds().get(j).getId()
-						&& chemin.contains(graphe.getArcs().get(i).getSource()))) {
-					count++;
-				}
-			}
-			if(count == graphe.getNoeuds().size()) {
-				arcs.add(graphe.getArcs().get(i));
-				arcs.add(new Arc(graphe.getArcs().size()+k, graphe.getArcs().get(i).getPoids(), graphe.getArcs().get(i).getDestination(), graphe.getArcs().get(i).getSource()));
-				k++;
-			}
-		}
-		System.out.println("arcs " + arcs);
-		System.out.println(graphe.getArcs());
-		graphe.setArcs(null);
-		graphe.setArcs(arcs);
-		System.out.println(graphe.getArcs());
+//    	if(orientation == false) {
+//    		for(int i=0; i<graphe.getArcs().size(); i++) {
+//    			int count = 0;
+//    			for(int j=0; j<graphe.getNoeuds().size(); j++) {
+//    				if((graphe.getArcs().get(i).getSource().getId() == graphe.getNoeuds().get(j).getId()
+//    						&& chemin.contains(graphe.getArcs().get(i).getDestination()))
+//    						|| (graphe.getArcs().get(i).getDestination().getId() == graphe.getNoeuds().get(j).getId()
+//    						&& chemin.contains(graphe.getArcs().get(i).getSource()))) {
+//    					count++;
+//    				}
+//    			}
+//    			if(count == graphe.getNoeuds().size()) {
+//    				arcs.add(graphe.getArcs().get(i));
+//    				arcs.add(new Arc(graphe.getArcs().size()+k, graphe.getArcs().get(i).getPoids(), graphe.getArcs().get(i).getDestination(), graphe.getArcs().get(i).getSource()));
+//    				k++;
+//    			}
+//    		}
+//    		graphe.setArcs(null);
+//    		graphe.setArcs(arcs);
+//    	}
+    	int id = 1;
+    	for(int i = 0 ; i<chemin.size();i++) {
+    		if(i+1<chemin.size()) {
+    			arcs.add(new Arc(id,i,chemin.get(i),chemin.get(i+1)));
+    		}
+    	}
+    	graphe.setArcs(null);
+  		graphe.setArcs(arcs);
+    	System.out.println("Arc List :"+arcs);
 		dessinerLePlusCourtChemin(ad, graphe, chemin, GrapheLayout, orientation);
-		System.out.println("--------------------------");
-		System.out.println(graphe.getNoeuds());
-		System.out.println(graphe.getArcs());
 	}
 
 	private void dessinerLePlusCourtChemin(AlgorithmeDijkstra ad, Graphe graphe, LinkedList<Noeud> chemin, String GrapheLayout,boolean orientation) {
