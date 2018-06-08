@@ -537,14 +537,11 @@ public class Main extends JFrame{
 
 						if(chckbxOrient.isSelected() == false) {
 							AlgorithmeDijkstra ad = new AlgorithmeDijkstra(graphe, false);
-							System.out.println("NonOriente");
 							LinkedList<Noeud> chemin_1 = ad.dessinerChemin(source, destination);
 							int som_chemin_1 = ad.getPlusCourteDistance(destination);
 
 							LinkedList<Noeud> chemin_2 = ad.dessinerChemin(destination, source);
 							int som_chemin_2 = ad.getPlusCourteDistance(source);
-							System.out.println("Som :" + som_chemin_1 + " ===> " + chemin_1);
-							System.out.println("Som :" + som_chemin_2 + " ===> " + chemin_2);
 							if(som_chemin_1 < 0 && som_chemin_2 < 0) {
 								if(som_chemin_1 > som_chemin_2) {
 									logField.setText(ad.plusCourtChemin(source, destination));
@@ -570,10 +567,8 @@ public class Main extends JFrame{
 							}
 						} else {
 							AlgorithmeDijkstra ad = new AlgorithmeDijkstra(graphe, true);
-							System.out.println("Oriente");
 							logField.setText(ad.plusCourtChemin(source, destination));
 							LinkedList<Noeud> chemin = ad.dessinerChemin(source, destination);
-							System.out.println("======> " + chemin);
 							
 							new DjikstraUI(ad, graphe, chemin, choice.getSelectedItem(), true).setVisible(true);
 						}

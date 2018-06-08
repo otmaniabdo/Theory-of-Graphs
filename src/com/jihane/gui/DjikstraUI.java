@@ -69,7 +69,6 @@ public class DjikstraUI extends JFrame {
     	}
     	graphe.setArcs(null);
   		graphe.setArcs(arcs);
-    	System.out.println("Arc List :"+arcs);
 		dessinerLePlusCourtChemin(ad, graphe, chemin, GrapheLayout, orientation);
 	}
 
