@@ -529,7 +529,8 @@ public class Main extends JFrame{
 		btnDjikstra.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				
+				Graphe graphe = new Graphe(arcs, noeuds);
+				draw(choice.getSelectedItem());
 				if(cbDjikstraDebut.getSelectedItem() != null) {
 					if(cbDjikstraFin.getSelectedItem() != null) {
 						Noeud source = noeuds.get(Integer.parseInt(cbDjikstraDebut.getSelectedItem().toString())-1);
@@ -607,5 +608,55 @@ public class Main extends JFrame{
 
 	public void setArcs(LinkedList<Arc> arcs) {
 		Main.arcs = arcs;
+	}
+	
+	public void draw(String GrapheLayout) {
+		DrawingGraph grph = new DrawingGraph(arcs,noeuds.size(),orientation);
+		Layout<Integer, String> layout;
+		if(GrapheLayout.equals("FRLayout")) {
+			layout = new FRLayout<>(grph.g);
+		}else if(GrapheLayout.equals("CircleLayout")) {
+			layout = new CircleLayout<>(grph.g);
+		}else if(GrapheLayout.equals("SpringLayout")){
+			layout = new SpringLayout<>(grph.g);
+		}else{
+			layout = new SpringLayout2<>(grph.g);
+		}
+        layout.setSize(new Dimension(480, 480));
+		BasicVisualizationServer<Integer,String> vv = new BasicVisualizationServer<Integer,String>(layout);
+        vv.setPreferredSize(new Dimension(511, 511));       
+        // Setup up a new vertex to paint transformer...
+        Transformer<Integer,Paint> vertexPaint = new Transformer<Integer,Paint>() {
+            @Override
+			public Paint transform(Integer i) {
+                return Color.white;
+            }
+        };  
+        // Set up a new stroke Transformer for the edges
+        float dash[] = {0.1f};
+        final Stroke edgeStroke = new BasicStroke(1.0f, BasicStroke.CAP_BUTT,
+             BasicStroke.JOIN_MITER, 10.0f, dash, 0.0f);
+        Transformer<String, Stroke> edgeStrokeTransformer = new Transformer<String, Stroke>() {
+            @Override
+			public Stroke transform(String s) {
+                return edgeStroke;
+            }
+        };
+        Transformer<Integer,Shape> vertexSize = new Transformer<Integer,Shape>(){
+            public Shape transform(Integer i){
+                Ellipse2D circle = new Ellipse2D.Double(-15, -15, 20, 20);
+                // in this case, the vertex is twice as large
+                return AffineTransform.getScaleInstance(2, 2).createTransformedShape(circle);
+            }
+        };
+        
+        vv.getRenderContext().setVertexFillPaintTransformer(vertexPaint);
+        vv.getRenderContext().setVertexShapeTransformer(vertexSize);
+        vv.getRenderContext().setEdgeStrokeTransformer(edgeStrokeTransformer);
+        vv.getRenderContext().setVertexLabelTransformer(new ToStringLabeller());
+        vv.getRenderContext().setEdgeLabelTransformer(new ToStringLabeller());
+        vv.getRenderer().getVertexLabelRenderer().setPosition(Position.CNTR);
+		panel_4.removeAll();
+        panel_4.add(vv);
 	}
 }
