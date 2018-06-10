@@ -40,7 +40,7 @@ public class DjikstraUI extends JFrame {
 //		graphe.setNoeuds(null);
 //		graphe.setNoeuds(chemin);
 		LinkedList<Arc> arcs = new LinkedList<Arc>();
-    	int k = 1;
+		LinkedList<Integer> poids = new LinkedList<Integer>();
 //    	if(orientation == false) {
 //    		for(int i=0; i<graphe.getArcs().size(); i++) {
 //    			int count = 0;
@@ -61,10 +61,18 @@ public class DjikstraUI extends JFrame {
 //    		graphe.setArcs(null);
 //    		graphe.setArcs(arcs);
 //    	}
+		for(Arc a : graphe.getArcs()) {
+			for(int k=1; k<chemin.size(); k++) {
+				if(a.getDestination().getId() == chemin.get(k-1).getId() 
+						&& a.getSource().getId() == chemin.get(k).getId()) {
+					poids.add(a.getPoids());
+				}
+			}
+		}
     	int id = 1;
     	for(int i = 0 ; i<chemin.size();i++) {
     		if(i+1<chemin.size()) {
-    			arcs.add(new Arc(id,i,chemin.get(i),chemin.get(i+1)));
+    			arcs.add(new Arc(id, poids.get(i), chemin.get(i), chemin.get(i+1)));
     		}
     	}
     	graphe.setArcs(null);
