@@ -63,8 +63,10 @@ public class DjikstraUI extends JFrame {
 //    	}
 		for(Arc a : graphe.getArcs()) {
 			for(int k=1; k<chemin.size(); k++) {
-				if(a.getDestination().getId() == chemin.get(k-1).getId() 
-						&& a.getSource().getId() == chemin.get(k).getId()) {
+				if((a.getDestination().getId() == chemin.get(k-1).getId() 
+						&& a.getSource().getId() == chemin.get(k).getId())
+						|| (a.getSource().getId() == chemin.get(k-1).getId()
+						&& a.getDestination().getId() == chemin.get(k).getId())) {
 					poids.add(a.getPoids());
 				}
 			}
